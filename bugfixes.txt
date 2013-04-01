@@ -3,3 +3,8 @@ List of bugs fixed in this repository:
 * C343-248:  You can't put candles in a candelabrum while underwater.
              Author:  Sgeo
              Source:  http://bilious.alt.org/?257
+
+* C343-324:  Cutting a long worm in two will crash the game if the cut takes
+             the worm to 1 HP or if long worms had become extinct.
+             Author:  Patric Mueller
+             Source:  http://bilious.alt.org/?332
