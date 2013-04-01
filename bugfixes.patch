@@ -1,0 +1,30 @@
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
+--- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:10:04.378849401 -0400
+@@ -0,0 +1,3 @@
++List of bugs fixed in this repository:
++
++* This is the initial commit; no bugs are fixed yet.
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/README nethack-3.4.3-bugfix/README
+--- nethack-3.4.3/README	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/README	2013-03-31 21:01:18.387440642 -0400
+@@ -1,3 +1,19 @@
++This repository consists of the original vanilla NetHack 3.4.3 sources, plus
++fixes for bugs discovered and reported by the community -- primarily on
++NetHackWiki (http://nethackwiki.com/), on Bilious (http://bilious.alt.org/) and
++on rec.games.roguelike.nethack.  The aim is to provide "one stop shopping" for
++fixes for known bugs; Bilious, SourceForge, GitHub and the like are the places
++for new features.
++
++Priority is given to bugs listed by the DevTeam.
++
++The file "bugfixes.patch" contains the diff between the unmodified sources and
++this repository.  The file "bugfixes.txt" contains the list of bugs fixed.
++
++The original NetHack README follows:
++
++==============================================================================
++
+                 NetHack 3.4.3 -- General information
+ 
+ NetHack 3.4 is an enhancement to the dungeon exploration game NetHack.

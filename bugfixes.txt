@@ -1,0 +1,3 @@
+List of bugs fixed in this repository:
+
+* This is the initial commit; no bugs are fixed yet.
