@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 22:49:40.340437022 -0400
-@@ -0,0 +1,49 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 22:58:02.758241936 -0400
+@@ -0,0 +1,55 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -33,6 +33,10 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Author:  Patric Mueller
 +             Source:  http://bilious.alt.org/?342
 +
++* C343-162:  Using Magicbane may cause an ungrammatical message.
++             Author:  Ray Chason
++             Source:  Uploaded to Bilious, but not public as of this writing.
++
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.
 +* SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
@@ -43,6 +47,8 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             raster font shows wrong characters for many dungeon features.
 +* W343-4:    Keyboard may stop responding after locking or unlocking a door
 +             when using altkeyhandler=nhraykey.dll
++             Author:  Ray Chason
++             Source:  http://bilious.alt.org/?313
 +
 +Rejected patches:
 +
@@ -80,113 +86,6 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  E struct monst *FDECL(boomhit, (int,int));
  E int FDECL(burn_floor_paper, (int,int,BOOLEAN_P,BOOLEAN_P));
  E void FDECL(buzz, (int,int,XCHAR_P,XCHAR_P,int,int));
-diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/nh-win32-locale-patch.txt nethack-3.4.3-bugfix/nh-win32-locale-patch.txt
---- nethack-3.4.3/nh-win32-locale-patch.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/nh-win32-locale-patch.txt	2013-03-31 22:47:48.266710733 -0400
-@@ -0,0 +1,103 @@
-+diff -U 3 -r nethack-3.4.3/sys/winnt/nhraykey.c nethack-3.4.3-win32/sys/winnt/nhraykey.c
-+--- nethack-3.4.3/sys/winnt/nhraykey.c	Sun Dec 07 18:39:13 2003
-++++ nethack-3.4.3-win32/sys/winnt/nhraykey.c	Wed Jan 09 19:27:34 2008
-+@@ -538,16 +538,22 @@
-+ 			shiftstate = ir->Event.KeyEvent.dwControlKeyState;
-+ 			vk = ir->Event.KeyEvent.wVirtualKeyCode;
-+ 			keycode = MapVirtualKey(vk, 2);
-+-			if (is_altseq(shiftstate)) {
-+-				if  (ch || inmap(keycode,vk)) altseq = 1;
-+-				else altseq = -1;	/* invalid altseq */
-+-			}
-+-			if (ch || iskeypad(scan) || altseq) {
-+-				done = 1;	    /* Stop looking         */
-+-				retval = 1;         /* Found what we sought */
-+-			} else {
-+-				/* Strange Key event; let's purge it to avoid trouble */
-++			if (scan == 0 && vk == 0) {
-++				/* It's the bogus_key.  Discard it */
-+ 				ReadConsoleInput(hConIn,ir,1,&count);
-++			}
-++			else {
-++				if (is_altseq(shiftstate)) {
-++					if  (ch || inmap(keycode,vk)) altseq = 1;
-++					else altseq = -1;	/* invalid altseq */
-++				}
-++				if (ch || iskeypad(scan) || altseq) {
-++					done = 1;	    /* Stop looking         */
-++					retval = 1;         /* Found what we sought */
-++				} else {
-++					/* Strange Key event; let's purge it to avoid trouble */
-++					ReadConsoleInput(hConIn,ir,1,&count);
-++				}
-+ 			}
-+ 
-+ 		}
-+diff -U 3 -r nethack-3.4.3/sys/winnt/nttty.c nethack-3.4.3-win32/sys/winnt/nttty.c
-+--- nethack-3.4.3/sys/winnt/nttty.c	Sun Dec 07 18:39:13 2003
-++++ nethack-3.4.3-win32/sys/winnt/nttty.c	Wed Jan 09 19:38:33 2008
-+@@ -30,6 +30,7 @@
-+  * CreateFile
-+  * GetConsoleScreenBufferInfo
-+  * GetStdHandle
-++ * GetVersion
-+  * SetConsoleCursorPosition
-+  * SetConsoleTextAttribute
-+  * SetConsoleCtrlHandler
-+@@ -131,6 +132,8 @@
-+ static DWORD ccount, acount;
-+ static COORD cursor = {0,0};
-+ 
-++static BOOL is_nt;
-++
-+ /*
-+  * Called after returning from ! or ^Z
-+  */
-+@@ -140,6 +143,7 @@
-+ #ifndef TEXTCOLOR
-+ 	int k;
-+ #endif
-++	is_nt = (GetVersion() & 0x80000000) == 0;
-+ 	erase_char = '\b';
-+ 	kill_char = 21;		/* cntl-U */
-+ 	iflags.cbreak = TRUE;
-+@@ -429,8 +433,18 @@
-+ 	    default:
-+ 			WriteConsoleOutputAttribute(hConOut,&attr,1,
-+ 							cursor,&acount);
-+-			WriteConsoleOutputCharacter(hConOut,&ch,1,
-+-							cursor,&ccount);
-++			/* Avoid WriteConsoleOutputCharacterA in NT --
-++			   it's broken */
-++			if (is_nt) {
-++				WCHAR wch[2];
-++				MultiByteToWideChar(CP_OEMCP, 0,
-++						&ch, 1, wch, 2);
-++				WriteConsoleOutputCharacterW(hConOut,wch,1,
-++								cursor,&ccount);
-++			} else {
-++				WriteConsoleOutputCharacterA(hConOut,&ch,1,
-++								cursor,&ccount);
-++			}
-+ 			cursor.X++;
-+ 	}
-+ }
-+@@ -476,7 +490,17 @@
-+ 	cursor.X = ttyDisplay->curx;
-+ 	cursor.Y = ttyDisplay->cury;
-+ 	WriteConsoleOutputAttribute(hConOut,&attr,1,cursor,&acount);
-+-	WriteConsoleOutputCharacter(hConOut,&ch,1,cursor,&ccount);
-++	/* Avoid WriteConsoleOutputCharacterA in NT -- it's broken */
-++	if (is_nt) {
-++		WCHAR wch[2];
-++		MultiByteToWideChar(CP_OEMCP, 0,
-++				&ch, 1, wch, 2);
-++		WriteConsoleOutputCharacterW(hConOut,wch,1,
-++						cursor,&ccount);
-++	} else {
-++		WriteConsoleOutputCharacterA(hConOut,&ch,1,
-++						cursor,&ccount);
-++	}
-+ }
-+ 
-+ void
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/README nethack-3.4.3-bugfix/README
 --- nethack-3.4.3/README	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/README	2013-03-31 21:01:18.387440642 -0400
@@ -260,6 +159,27 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		if (!obj->lamplit)
  		    You("try to light %s...", the(xname(obj)));
  		use_lamp(obj);
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/artifact.c nethack-3.4.3-bugfix/src/artifact.c
+--- nethack-3.4.3/src/artifact.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/artifact.c	2013-03-31 22:55:38.349180887 -0400
+@@ -905,7 +905,7 @@
+     if (youattack || youdefend || vis) {
+ 	(void) upstart(hittee);	/* capitalize */
+ 	if (resisted) {
+-	    pline("%s %s!", hittee, vtense(hittee, "resist"));
++	    pline("%s resist%s!", hittee, youdefend ? "" : "s");
+ 	    shieldeff(youdefend ? u.ux : mdef->mx,
+ 		      youdefend ? u.uy : mdef->my);
+ 	}
+@@ -916,7 +916,7 @@
+ 	    if (do_stun) Strcat(buf, "stunned");
+ 	    if (do_stun && do_confuse) Strcat(buf, " and ");
+ 	    if (do_confuse) Strcat(buf, "confused");
+-	    pline("%s %s %s%c", hittee, vtense(hittee, "are"),
++	    pline("%s %s %s%c", hittee, youdefend ? "are" : "is",
+ 		  buf, (do_stun && do_confuse) ? '!' : '.');
+ 	}
+     }
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do.c nethack-3.4.3-bugfix/src/do.c
 --- nethack-3.4.3/src/do.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/do.c	2013-03-31 21:42:19.768223685 -0400

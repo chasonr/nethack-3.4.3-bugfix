@@ -905,7 +905,7 @@ char *hittee;			/* target's name: "you" or mon_nam(mdef) */
     if (youattack || youdefend || vis) {
 	(void) upstart(hittee);	/* capitalize */
 	if (resisted) {
-	    pline("%s %s!", hittee, vtense(hittee, "resist"));
+	    pline("%s resist%s!", hittee, youdefend ? "" : "s");
 	    shieldeff(youdefend ? u.ux : mdef->mx,
 		      youdefend ? u.uy : mdef->my);
 	}
@@ -916,7 +916,7 @@ char *hittee;			/* target's name: "you" or mon_nam(mdef) */
 	    if (do_stun) Strcat(buf, "stunned");
 	    if (do_stun && do_confuse) Strcat(buf, " and ");
 	    if (do_confuse) Strcat(buf, "confused");
-	    pline("%s %s %s%c", hittee, vtense(hittee, "are"),
+	    pline("%s %s %s%c", hittee, youdefend ? "are" : "is",
 		  buf, (do_stun && do_confuse) ? '!' : '.');
 	}
     }
