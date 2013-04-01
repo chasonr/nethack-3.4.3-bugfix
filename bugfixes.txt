@@ -35,6 +35,13 @@ List of bugs fixed in this repository:
              Author:  Patric Mueller
              Source:  http://bilious.alt.org/?337
 
+* W343-3:    Under the Polish version of Windows 2000 SP4, screen output with a
+             raster font shows wrong characters for many dungeon features.
+* W343-4:    Keyboard may stop responding after locking or unlocking a door
+             when using altkeyhandler=nhraykey.dll
+             Author:  Ray Chason
+             Source:  http://bilious.alt.org/?313
+
 Rejected patches:
 
 * M343-1:    Release code does not build under Carbon.

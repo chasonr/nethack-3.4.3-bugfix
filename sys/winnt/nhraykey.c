@@ -538,16 +538,22 @@ INPUT_RECORD *ir;
 			shiftstate = ir->Event.KeyEvent.dwControlKeyState;
 			vk = ir->Event.KeyEvent.wVirtualKeyCode;
 			keycode = MapVirtualKey(vk, 2);
-			if (is_altseq(shiftstate)) {
-				if  (ch || inmap(keycode,vk)) altseq = 1;
-				else altseq = -1;	/* invalid altseq */
-			}
-			if (ch || iskeypad(scan) || altseq) {
-				done = 1;	    /* Stop looking         */
-				retval = 1;         /* Found what we sought */
-			} else {
-				/* Strange Key event; let's purge it to avoid trouble */
+			if (scan == 0 && vk == 0) {
+				/* It's the bogus_key.  Discard it */
 				ReadConsoleInput(hConIn,ir,1,&count);
+			}
+			else {
+				if (is_altseq(shiftstate)) {
+					if  (ch || inmap(keycode,vk)) altseq = 1;
+					else altseq = -1;	/* invalid altseq */
+				}
+				if (ch || iskeypad(scan) || altseq) {
+					done = 1;	    /* Stop looking         */
+					retval = 1;         /* Found what we sought */
+				} else {
+					/* Strange Key event; let's purge it to avoid trouble */
+					ReadConsoleInput(hConIn,ir,1,&count);
+				}
 			}
 
 		}

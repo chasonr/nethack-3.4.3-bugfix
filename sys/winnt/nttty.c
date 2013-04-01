@@ -30,6 +30,7 @@ int FDECL(process_keystroke, (INPUT_RECORD *, boolean *,
  * CreateFile
  * GetConsoleScreenBufferInfo
  * GetStdHandle
+ * GetVersion
  * SetConsoleCursorPosition
  * SetConsoleTextAttribute
  * SetConsoleCtrlHandler
@@ -131,6 +132,8 @@ static WORD attr = (FOREGROUND_GREEN|FOREGROUND_BLUE|FOREGROUND_RED);
 static DWORD ccount, acount;
 static COORD cursor = {0,0};
 
+static BOOL is_nt;
+
 /*
  * Called after returning from ! or ^Z
  */
@@ -140,6 +143,7 @@ gettty()
 #ifndef TEXTCOLOR
 	int k;
 #endif
+	is_nt = (GetVersion() & 0x80000000) == 0;
 	erase_char = '\b';
 	kill_char = 21;		/* cntl-U */
 	iflags.cbreak = TRUE;
@@ -429,8 +433,18 @@ char ch;
 	    default:
 			WriteConsoleOutputAttribute(hConOut,&attr,1,
 							cursor,&acount);
-			WriteConsoleOutputCharacter(hConOut,&ch,1,
-							cursor,&ccount);
+			/* Avoid WriteConsoleOutputCharacterA in NT --
+			   it's broken */
+			if (is_nt) {
+				WCHAR wch[2];
+				MultiByteToWideChar(CP_OEMCP, 0,
+						&ch, 1, wch, 2);
+				WriteConsoleOutputCharacterW(hConOut,wch,1,
+								cursor,&ccount);
+			} else {
+				WriteConsoleOutputCharacterA(hConOut,&ch,1,
+								cursor,&ccount);
+			}
 			cursor.X++;
 	}
 }
@@ -476,7 +490,17 @@ int in_ch;
 	cursor.X = ttyDisplay->curx;
 	cursor.Y = ttyDisplay->cury;
 	WriteConsoleOutputAttribute(hConOut,&attr,1,cursor,&acount);
-	WriteConsoleOutputCharacter(hConOut,&ch,1,cursor,&ccount);
+	/* Avoid WriteConsoleOutputCharacterA in NT -- it's broken */
+	if (is_nt) {
+		WCHAR wch[2];
+		MultiByteToWideChar(CP_OEMCP, 0,
+				&ch, 1, wch, 2);
+		WriteConsoleOutputCharacterW(hConOut,wch,1,
+						cursor,&ccount);
+	} else {
+		WriteConsoleOutputCharacterA(hConOut,&ch,1,
+						cursor,&ccount);
+	}
 }
 
 void
