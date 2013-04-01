@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:37:38.790166200 -0400
-@@ -0,0 +1,10 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:43:42.410480421 -0400
+@@ -0,0 +1,17 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -12,6 +12,25 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             the worm to 1 HP or if long worms had become extinct.
 +             Author:  Patric Mueller
 +             Source:  http://bilious.alt.org/?332
++
++* C343-19:   Dipping acid in a fountain may not destroy the acid. 
++* C343-179:  If a monster is killed by a drawbridge while carrying a potion of
++             acid, the game may panic.
++* C343-268:  Used up potion of acid may end up in bones file.
++             Author:  Patric Mueller
++             Source:  http://bilious.alt.org/?340
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/extern.h nethack-3.4.3-bugfix/include/extern.h
+--- nethack-3.4.3/include/extern.h	2012-01-19 19:21:43.000000000 -0500
++++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 21:42:19.768223685 -0400
+@@ -2016,7 +2016,7 @@
+ E void FDECL(fill_pit, (int,int));
+ E int FDECL(float_down, (long, long));
+ E int FDECL(fire_damage, (struct obj *,BOOLEAN_P,BOOLEAN_P,XCHAR_P,XCHAR_P));
+-E void FDECL(water_damage, (struct obj *,BOOLEAN_P,BOOLEAN_P));
++E boolean FDECL(water_damage, (struct obj *,BOOLEAN_P,BOOLEAN_P));
+ E boolean NDECL(drown);
+ E void FDECL(drain_en, (int));
+ E int NDECL(dountrap);
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/README nethack-3.4.3-bugfix/README
 --- nethack-3.4.3/README	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/README	2013-03-31 21:01:18.387440642 -0400
@@ -67,6 +86,56 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		if (!obj->lamplit)
  		    You("try to light %s...", the(xname(obj)));
  		use_lamp(obj);
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do.c nethack-3.4.3-bugfix/src/do.c
+--- nethack-3.4.3/src/do.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/do.c	2013-03-31 21:42:19.768223685 -0400
+@@ -208,7 +208,7 @@
+ 		    map_background(x, y, 0);
+ 		    newsym(x, y);
+ 		}
+-		water_damage(obj, FALSE, FALSE);
++		return water_damage(obj, FALSE, FALSE);
+ 	} else if (u.ux == x && u.uy == y &&
+ 		(!u.utrap || u.utraptype != TT_PIT) &&
+ 		(t = t_at(x,y)) != 0 && t->tseen &&
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/trap.c nethack-3.4.3-bugfix/src/trap.c
+--- nethack-3.4.3/src/trap.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/trap.c	2013-03-31 21:42:19.768223685 -0400
+@@ -2678,12 +2678,15 @@
+     return retval;
+ }
+ 
+-void
++/* returns TRUE if obj is destroyed */
++boolean
+ water_damage(obj, force, here)
+ register struct obj *obj;
+ register boolean force, here;
+ {
+ 	struct obj *otmp;
++	struct obj *obj_original = obj;
++	boolean obj_destroyed = FALSE;
+ 
+ 	/* Scrolls, spellbooks, potions, weapons and
+ 	   pieces of armor may get affected by the water */
+@@ -2724,6 +2727,7 @@
+ 				/* damage player/monster? */
+ 				pline("A potion explodes!");
+ 				delobj(obj);
++				obj_destroyed = (obj == obj_original);
+ 				continue;
+ 			} else if (obj->odiluted) {
+ 				obj->otyp = POT_WATER;
+@@ -2740,7 +2744,9 @@
+ 			   (uarmc->cursed && !rn2(3)))
+ 				obj->oeroded++;
+ 		}
++		obj_destroyed = FALSE;
+ 	}
++	return obj_destroyed;
+ }
+ 
+ /*
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/worm.c nethack-3.4.3-bugfix/src/worm.c
 --- nethack-3.4.3/src/worm.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/worm.c	2013-03-31 21:35:39.988686294 -0400

@@ -8,3 +8,10 @@ List of bugs fixed in this repository:
              the worm to 1 HP or if long worms had become extinct.
              Author:  Patric Mueller
              Source:  http://bilious.alt.org/?332
+
+* C343-19:   Dipping acid in a fountain may not destroy the acid. 
+* C343-179:  If a monster is killed by a drawbridge while carrying a potion of
+             acid, the game may panic.
+* C343-268:  Used up potion of acid may end up in bones file.
+             Author:  Patric Mueller
+             Source:  http://bilious.alt.org/?340
