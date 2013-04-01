@@ -1,3 +1,5 @@
 List of bugs fixed in this repository:
 
-* This is the initial commit; no bugs are fixed yet.
+* C343-248:  You can't put candles in a candelabrum while underwater.
+             Author:  Sgeo
+             Source:  http://bilious.alt.org/?257

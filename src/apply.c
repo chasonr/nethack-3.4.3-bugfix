@@ -922,13 +922,13 @@ struct obj **optr;
 		You(no_elbow_room);
 		return;
 	}
-	if(Underwater) {
-		pline("Sorry, fire and water don't mix.");
-		return;
-	}
 
 	otmp = carrying(CANDELABRUM_OF_INVOCATION);
 	if(!otmp || otmp->spe == 7) {
+		if(Underwater) {
+		    pline("Sorry, fire and water don't mix.");
+		    return;
+		}
 		use_lamp(obj);
 		return;
 	}
@@ -938,6 +938,10 @@ struct obj **optr;
 		safe_qbuf(qbuf, sizeof(" to ?"), the(xname(otmp)),
 			the(simple_typename(otmp->otyp)), "it"));
 	if(yn(qbuf) == 'n') {
+		if(Underwater) {
+		    pline("Sorry, fire and water don't mix.");
+		    return;
+		}
 		if (!obj->lamplit)
 		    You("try to light %s...", the(xname(obj)));
 		use_lamp(obj);

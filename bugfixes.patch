@@ -1,10 +1,12 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:10:04.378849401 -0400
-@@ -0,0 +1,3 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:27:48.178773548 -0400
+@@ -0,0 +1,5 @@
 +List of bugs fixed in this repository:
 +
-+* This is the initial commit; no bugs are fixed yet.
++* C343-248:  You can't put candles in a candelabrum while underwater.
++             Author:  Sgeo
++             Source:  http://bilious.alt.org/?257
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/README nethack-3.4.3-bugfix/README
 --- nethack-3.4.3/README	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/README	2013-03-31 21:01:18.387440642 -0400
@@ -28,3 +30,35 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
                  NetHack 3.4.3 -- General information
  
  NetHack 3.4 is an enhancement to the dungeon exploration game NetHack.
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/apply.c nethack-3.4.3-bugfix/src/apply.c
+--- nethack-3.4.3/src/apply.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/apply.c	2013-03-31 21:30:24.411403518 -0400
+@@ -922,13 +922,13 @@
+ 		You(no_elbow_room);
+ 		return;
+ 	}
+-	if(Underwater) {
+-		pline("Sorry, fire and water don't mix.");
+-		return;
+-	}
+ 
+ 	otmp = carrying(CANDELABRUM_OF_INVOCATION);
+ 	if(!otmp || otmp->spe == 7) {
++		if(Underwater) {
++		    pline("Sorry, fire and water don't mix.");
++		    return;
++		}
+ 		use_lamp(obj);
+ 		return;
+ 	}
+@@ -938,6 +938,10 @@
+ 		safe_qbuf(qbuf, sizeof(" to ?"), the(xname(otmp)),
+ 			the(simple_typename(otmp->otyp)), "it"));
+ 	if(yn(qbuf) == 'n') {
++		if(Underwater) {
++		    pline("Sorry, fire and water don't mix.");
++		    return;
++		}
+ 		if (!obj->lamplit)
+ 		    You("try to light %s...", the(xname(obj)));
+ 		use_lamp(obj);
