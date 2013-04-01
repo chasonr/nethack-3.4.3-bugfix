@@ -34,3 +34,11 @@ List of bugs fixed in this repository:
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
              Author:  Patric Mueller
              Source:  http://bilious.alt.org/?337
+
+Rejected patches:
+
+* M343-1:    Release code does not build under Carbon.
+             Reason:  Patch does not apply cleanly; changes to sys/mac/macwin.c
+                      refer to lines that do not exist.
+             Author:  Kevin Hugo
+             Source:  http://www.nethack.org/v343/bugmore/src-diff-mac.txt
