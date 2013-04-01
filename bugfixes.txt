@@ -19,3 +19,12 @@ List of bugs fixed in this repository:
 * C343-100:  Game may crash if thrown potion hits bars before a monster.
              Author:  Patric Mueller
              Source:  http://bilious.alt.org/?341
+
+* C343-218:  Applying a wielded cream pie can crash the game. This generalizes
+             to wielded objects being destroyed.
+* C343-275:  If a lit, wielded, candle or potion of oil burns out, the game may
+             crash.
+* C343-276:  If a figurine auto-transforms while wielded or worn, the game may
+             crash.
+             Author:  Patric Mueller
+             Source:  http://bilious.alt.org/?342

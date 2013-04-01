@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:43:42.410480421 -0400
-@@ -0,0 +1,17 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:57:55.551822118 -0400
+@@ -0,0 +1,27 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -19,6 +19,16 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +* C343-268:  Used up potion of acid may end up in bones file.
 +             Author:  Patric Mueller
 +             Source:  http://bilious.alt.org/?340
++
++* C343-100:  Game may crash if thrown potion hits bars before a monster.
++             Author:  Patric Mueller
++             Source:  http://bilious.alt.org/?341
++
++* C343-218:  Applying a wielded cream pie can crash the game. This generalizes to wielded objects being destroyed.
++* C343-275:  If a lit, wielded, candle or potion of oil burns out, the game may crash.
++* C343-276:  If a figurine auto-transforms while wielded or worn, the game may crash.
++             Author:  Patric Mueller
++             Source:  http://bilious.alt.org/?342
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/extern.h nethack-3.4.3-bugfix/include/extern.h
 --- nethack-3.4.3/include/extern.h	2012-01-19 19:21:43.000000000 -0500
 +++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 21:51:15.948582942 -0400
@@ -168,6 +178,22 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  			if(mon) {
  			    if (ghitm(mon, obj))	/* was it caught? */
  				return 1;
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/shk.c nethack-3.4.3-bugfix/src/shk.c
+--- nethack-3.4.3/src/shk.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/shk.c	2013-03-31 21:56:19.689916704 -0400
+@@ -833,6 +833,12 @@
+ #endif
+ 		}
+ 	}
++
++	/* fix for C343-218, C343-275 and C343-276 */
++	if (obj == uwep) uwepgone();
++	if (obj == uswapwep) uswapwepgone();
++	if (obj == uquiver) uqwepgone();
++
+ 	dealloc_obj(obj);
+ }
+ #endif /* OVLB */
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/trap.c nethack-3.4.3-bugfix/src/trap.c
 --- nethack-3.4.3/src/trap.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/trap.c	2013-03-31 21:42:19.768223685 -0400
