@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 21:57:55.551822118 -0400
-@@ -0,0 +1,27 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 22:15:20.514140211 -0400
+@@ -0,0 +1,36 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -24,15 +24,32 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Author:  Patric Mueller
 +             Source:  http://bilious.alt.org/?341
 +
-+* C343-218:  Applying a wielded cream pie can crash the game. This generalizes to wielded objects being destroyed.
-+* C343-275:  If a lit, wielded, candle or potion of oil burns out, the game may crash.
-+* C343-276:  If a figurine auto-transforms while wielded or worn, the game may crash.
++* C343-218:  Applying a wielded cream pie can crash the game. This generalizes
++             to wielded objects being destroyed.
++* C343-275:  If a lit, wielded, candle or potion of oil burns out, the game may
++             crash.
++* C343-276:  If a figurine auto-transforms while wielded or worn, the game may
++             crash.
 +             Author:  Patric Mueller
 +             Source:  http://bilious.alt.org/?342
++
++* SC343-11:  It's possible to easily find the identity of a high priest on the
++             Astral plane.
++* SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
++             Author:  Patric Mueller
++             Source:  http://bilious.alt.org/?337
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/extern.h nethack-3.4.3-bugfix/include/extern.h
 --- nethack-3.4.3/include/extern.h	2012-01-19 19:21:43.000000000 -0500
-+++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 21:51:15.948582942 -0400
-@@ -2016,7 +2016,7 @@
++++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 22:13:58.751794758 -0400
+@@ -1576,6 +1576,7 @@
+ E const char *FDECL(a_gname_at, (XCHAR_P x,XCHAR_P y));
+ E const char *FDECL(align_gname, (ALIGNTYP_P));
+ E const char *FDECL(halu_gname, (ALIGNTYP_P));
++E const char *FDECL(rnd_gname, (int));
+ E const char *FDECL(align_gtitle, (ALIGNTYP_P));
+ E void FDECL(altar_wrath, (int,int));
+ 
+@@ -2016,7 +2017,7 @@
  E void FDECL(fill_pit, (int,int));
  E int FDECL(float_down, (long, long));
  E int FDECL(fire_damage, (struct obj *,BOOLEAN_P,BOOLEAN_P,XCHAR_P,XCHAR_P));
@@ -41,7 +58,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  E boolean NDECL(drown);
  E void FDECL(drain_en, (int));
  E int NDECL(dountrap);
-@@ -2367,7 +2367,7 @@
+@@ -2367,7 +2368,7 @@
  E void FDECL(hit, (const char *,struct monst *,const char *));
  E void FDECL(miss, (const char *,struct monst *));
  E struct monst *FDECL(bhit, (int,int,int,int,int (*)(MONST_P,OBJ_P),
@@ -178,6 +195,52 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  			if(mon) {
  			    if (ghitm(mon, obj))	/* was it caught? */
  				return 1;
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/pray.c nethack-3.4.3-bugfix/src/pray.c
+--- nethack-3.4.3/src/pray.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/pray.c	2013-03-31 22:13:58.751794758 -0400
+@@ -1788,12 +1788,21 @@
+ halu_gname(alignment)
+ aligntyp alignment;
+ {
++    if (!Hallucination) return align_gname(alignment);
++
++    return rnd_gname(ROLE_RANDOM);
++}
++
++/* select a random god based on role if provided */
++const char *
++rnd_gname(role)
++int role;
++{
+     const char *gnam;
+     int which;
+ 
+-    if (!Hallucination) return align_gname(alignment);
+-
+-    which = randrole();
++    /* select random role if valid role supplied */
++    which = (validrole(role)) ? role : randrole();
+     switch (rn2(3)) {
+      case 0:	gnam = roles[which].lgod; break;
+      case 1:	gnam = roles[which].ngod; break;
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/priest.c nethack-3.4.3-bugfix/src/priest.c
+--- nethack-3.4.3/src/priest.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/priest.c	2013-03-31 22:13:58.751794758 -0400
+@@ -274,7 +274,14 @@
+ 				Strcat(pname, "priest ");
+ 		}
+ 		Strcat(pname, "of ");
++		/* Astral Call bugfix */
++		if (mon->data == &mons[PM_HIGH_PRIEST] && !Hallucination &&
++		            Is_astralevel(&u.uz) && distu(mon->mx, mon->my) > 2) {
++			Strcat(pname, rnd_gname(str2role((char*)urole.name.m)));
++			Strcat(pname, "?");
++		} else {
+ 		Strcat(pname, halu_gname((int)EPRI(mon)->shralign));
++		}
+ 		return(pname);
+ 	}
+ 	/* use emin instead of epri */
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/shk.c nethack-3.4.3-bugfix/src/shk.c
 --- nethack-3.4.3/src/shk.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/shk.c	2013-03-31 21:56:19.689916704 -0400
