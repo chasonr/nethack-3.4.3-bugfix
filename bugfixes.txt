@@ -15,3 +15,7 @@ List of bugs fixed in this repository:
 * C343-268:  Used up potion of acid may end up in bones file.
              Author:  Patric Mueller
              Source:  http://bilious.alt.org/?340
+
+* C343-100:  Game may crash if thrown potion hits bars before a monster.
+             Author:  Patric Mueller
+             Source:  http://bilious.alt.org/?341
