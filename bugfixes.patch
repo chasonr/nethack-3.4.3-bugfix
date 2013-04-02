@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-03-31 22:58:02.758241936 -0400
-@@ -0,0 +1,55 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-02 00:34:26.852132676 -0400
+@@ -0,0 +1,59 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -36,6 +36,10 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +* C343-162:  Using Magicbane may cause an ungrammatical message.
 +             Author:  Ray Chason
 +             Source:  Uploaded to Bilious, but not public as of this writing.
++
++* C343-1:    At a pit the game can give messages with poor grammar.
++             Author:  Tung Nguyen
++             Source:  https://github.com/tung/NitroHack/commit/5d40e9f86486141df827e2afef78e992c4aac01b
 +
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.
@@ -182,8 +186,8 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
      }
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do.c nethack-3.4.3-bugfix/src/do.c
 --- nethack-3.4.3/src/do.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/do.c	2013-03-31 21:42:19.768223685 -0400
-@@ -208,7 +208,7 @@
++++ nethack-3.4.3-bugfix/src/do.c	2013-04-02 00:33:09.860525748 -0400
+@@ -208,15 +208,14 @@
  		    map_background(x, y, 0);
  		    newsym(x, y);
  		}
@@ -192,6 +196,15 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	} else if (u.ux == x && u.uy == y &&
  		(!u.utrap || u.utraptype != TT_PIT) &&
  		(t = t_at(x,y)) != 0 && t->tseen &&
+ 			(t->ttyp==PIT || t->ttyp==SPIKED_PIT)) {
+ 		/* you escaped a pit and are standing on the precipice */
+ 		if (Blind && flags.soundok)
+-			You_hear("%s %s downwards.",
+-				The(xname(obj)), otense(obj, "tumble"));
++			You_hear("%s tumble downwards.", the(xname(obj)));
+ 		else
+ 			pline("%s %s into %s pit.",
+ 				The(xname(obj)), otense(obj, "tumble"),
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/dokick.c nethack-3.4.3-bugfix/src/dokick.c
 --- nethack-3.4.3/src/dokick.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/dokick.c	2013-03-31 21:51:15.948582942 -0400

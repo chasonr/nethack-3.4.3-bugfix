@@ -33,6 +33,10 @@ List of bugs fixed in this repository:
              Author:  Ray Chason
              Source:  Uploaded to Bilious, but not public as of this writing.
 
+* C343-1:    At a pit the game can give messages with poor grammar.
+             Author:  Tung Nguyen
+             Source:  https://github.com/tung/NitroHack/commit/5d40e9f86486141df827e2afef78e992c4aac01b
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
