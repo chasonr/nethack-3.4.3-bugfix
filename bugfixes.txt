@@ -76,6 +76,10 @@ List of bugs fixed in this repository:
              Comment: The original patch makes two additional changes to
                       features present in GruntHack but not in vanilla.
 
+* C343-355:  Archeologists start out at basic skill level in sling.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/ccf75ee3bce3fe3295870c262ad28845e9f0bac8
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.

@@ -535,6 +535,18 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  }
  
  /*
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/weapon.c nethack-3.4.3-bugfix/src/weapon.c
+--- nethack-3.4.3/src/weapon.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/weapon.c	2013-04-07 14:37:15.038265390 -0400
+@@ -1248,6 +1248,8 @@
+ 
+ 	/* Set skill for all weapons in inventory to be basic */
+ 	for (obj = invent; obj; obj = obj->nobj) {
++	    if (obj->otyp == TOUCHSTONE ||
++		obj->otyp == LUCKSTONE) continue; 
+ 	    skill = weapon_type(obj);
+ 	    if (skill != P_NONE)
+ 		P_SKILL(skill) = P_BASIC;
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/worm.c nethack-3.4.3-bugfix/src/worm.c
 --- nethack-3.4.3/src/worm.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/worm.c	2013-03-31 21:35:39.988686294 -0400
