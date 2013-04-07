@@ -94,6 +94,12 @@ List of bugs fixed in this repository:
              Author:  Ray Chason
              Source:  http://bilious.alt.org/?313
 
+Bugs not mentioned on the DevTeam's website 
+
+*            Color of mithril objects is wrong 
+             Author: Bulwersator
+             Source: https://github.com/Bulwersator/UnNetHackPlus/commit/67c167367b8b118c9bc9b7f4e19bdd41bbc3b308
+
 Rejected patches:
 
 * M343-1:    Release code does not build under Carbon.
