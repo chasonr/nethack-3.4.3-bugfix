@@ -37,6 +37,11 @@ List of bugs fixed in this repository:
              Author:  Tung Nguyen
              Source:  https://github.com/tung/NitroHack/commit/5d40e9f86486141df827e2afef78e992c4aac01b
 
+* C343-175:  Chatting to hostile prisoners may give an inappropriate message.
+             Author:  Bulwersator
+             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/541d0b417bb81df10b4486b895ca78f5bb938247
+             Comment:  Actually tame prisoners give the inappropriate message.
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
