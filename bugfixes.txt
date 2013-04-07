@@ -56,6 +56,11 @@ List of bugs fixed in this repository:
              Author:  Patric Mueller
              Source:  http://sourceforge.net/apps/trac/unnethack/changeset/910
 
+* C343-174:  Drum of earthquake gives inappropriate message if hero 
+             or monster is in a pit.
+             Author:  Patric Mueller
+             Source:  http://sourceforge.net/apps/trac/unnethack/changeset/948
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.

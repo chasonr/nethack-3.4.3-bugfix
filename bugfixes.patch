@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 13:52:26.180392887 -0400
-@@ -0,0 +1,73 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 13:56:55.547174135 -0400
+@@ -0,0 +1,78 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -54,6 +54,11 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             flying steed.
 +             Author:  Edoardo Spadolini
 +             Source:  http://sourceforge.net/apps/trac/unnethack/changeset/958
++
++* C343-171:  Silver weapon damage message is sometimes missing when hero is
++             polymorphed.
++             Author:  Patric Mueller
++             Source:  http://sourceforge.net/apps/trac/unnethack/changeset/910
 +
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.
@@ -288,6 +293,18 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	if (u.ustuck == mtmp) {
  	    if (u.uswallow)
  		expels(mtmp, mtmp->data, TRUE);
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/music.c nethack-3.4.3-bugfix/src/music.c
+--- nethack-3.4.3/src/music.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/music.c	2013-04-07 14:18:04.857419811 -0400
+@@ -316,7 +316,7 @@
+ 				    xkilled(mtmp,0);
+ 				}
+ 			}
+-		    } else if (x == u.ux && y == u.uy) {
++		    } else if (!u.utrap && x == u.ux && y == u.uy) { 
+ 			    if (Levitation || Flying ||
+ 						is_clinger(youmonst.data)) {
+ 				    pline("A chasm opens up under you!");
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/pray.c nethack-3.4.3-bugfix/src/pray.c
 --- nethack-3.4.3/src/pray.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/pray.c	2013-03-31 22:13:58.751794758 -0400
