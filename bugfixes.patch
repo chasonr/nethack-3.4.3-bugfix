@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 14:34:41.733325206 -0400
-@@ -0,0 +1,98 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 14:57:34.625626282 -0400
+@@ -0,0 +1,103 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -17,6 +17,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +* C343-179:  If a monster is killed by a drawbridge while carrying a potion of
 +             acid, the game may panic.
 +* C343-268:  Used up potion of acid may end up in bones file.
++* C343-394:  Throwing a potion of acid into water may panic the game.
 +             Author:  Patric Mueller
 +             Source:  http://bilious.alt.org/?340
 +
@@ -79,6 +80,10 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Source:  https://github.com/sgrunt/GruntHack/commit/63dbb6485ccc8df690cdbd8eb2cec4d0f30139e4
 +             Comment: The original patch makes two additional changes to
 +                      features present in GruntHack but not in vanilla.
++
++* C343-355:  Archeologists start out at basic skill level in sling.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/ccf75ee3bce3fe3295870c262ad28845e9f0bac8
 +
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.

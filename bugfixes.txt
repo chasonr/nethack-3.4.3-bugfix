@@ -13,6 +13,7 @@ List of bugs fixed in this repository:
 * C343-179:  If a monster is killed by a drawbridge while carrying a potion of
              acid, the game may panic.
 * C343-268:  Used up potion of acid may end up in bones file.
+* C343-394:  Throwing a potion of acid into water may panic the game.
              Author:  Patric Mueller
              Source:  http://bilious.alt.org/?340
 
