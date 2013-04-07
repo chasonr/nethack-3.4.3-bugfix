@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 13:56:55.547174135 -0400
-@@ -0,0 +1,78 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 14:19:17.819905014 -0400
+@@ -0,0 +1,83 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -59,6 +59,11 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             polymorphed.
 +             Author:  Patric Mueller
 +             Source:  http://sourceforge.net/apps/trac/unnethack/changeset/910
++
++* C343-174:  Drum of earthquake gives inappropriate message if hero 
++             or monster is in a pit.
++             Author:  Patric Mueller
++             Source:  http://sourceforge.net/apps/trac/unnethack/changeset/948
 +
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.
@@ -351,6 +356,21 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		return(pname);
  	}
  	/* use emin instead of epri */
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/read.c nethack-3.4.3-bugfix/src/read.c
+--- nethack-3.4.3/src/read.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/read.c	2013-04-07 14:24:21.833580936 -0400
+@@ -804,7 +804,10 @@
+ 			known = TRUE;
+ 		} else {	/* armor and scroll both cursed */
+ 		    Your("%s %s.", xname(otmp), otense(otmp, "vibrate"));
+-		    if (otmp->spe >= -6) otmp->spe--;
++		    if (otmp->spe >= -6) {
++			otmp->spe--;
++			adj_abon(otmp, -1);
++		    }
+ 		    make_stunned(HStun + rn1(10, 10), TRUE);
+ 		}
+ 	    }
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/shk.c nethack-3.4.3-bugfix/src/shk.c
 --- nethack-3.4.3/src/shk.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/shk.c	2013-03-31 21:56:19.689916704 -0400

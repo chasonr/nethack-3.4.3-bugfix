@@ -61,6 +61,11 @@ List of bugs fixed in this repository:
              Author:  Patric Mueller
              Source:  http://sourceforge.net/apps/trac/unnethack/changeset/948
 
+* C343-30:   Cursed scroll of destroy armor on cursed armor doesn't always
+             interact correctly.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/e7afc1b022dd5e1b39dd2c69db077b533e66f3f4
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
