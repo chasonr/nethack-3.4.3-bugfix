@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 13:03:37.603091096 -0400
-@@ -0,0 +1,64 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 13:20:02.682005807 -0400
+@@ -0,0 +1,68 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -45,6 +45,10 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Author:  Bulwersator
 +             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/541d0b417bb81df10b4486b895ca78f5bb938247
 +             Comment:  Actually tame prisoners give the inappropriate message.
++
++* C343-299:  Killing tame engulfer from inside gives a warning message.
++             Author:  Jared Minch
++             Source:  https://github.com/sgrunt/GruntHack/commit/3df702230a3f767a4c7dd6f98d0156ed621a49ac
 +
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.
@@ -353,8 +357,48 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		    pline_msg = "gurgles.";
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/trap.c nethack-3.4.3-bugfix/src/trap.c
 --- nethack-3.4.3/src/trap.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/trap.c	2013-03-31 21:42:19.768223685 -0400
-@@ -2678,12 +2678,15 @@
++++ nethack-3.4.3-bugfix/src/trap.c	2013-04-07 13:50:27.870640374 -0400
+@@ -2313,7 +2313,8 @@
+ 	ELevitation &= ~emask;
+ 	if(Levitation) return(0); /* maybe another ring/potion/boots */
+ 	if(u.uswallow) {
+-	    You("float down, but you are still %s.",
++	    You((Flying) ? "feel less buoyant, but you are still %s.": 
++			   "float down, but you are still %s.", 
+ 		is_animal(u.ustuck->data) ? "swallowed" : "engulfed");
+ 	    return(1);
+ 	}
+@@ -2360,9 +2361,10 @@
+ 	}
+ 	if (!trap) {
+ 	    trap = t_at(u.ux,u.uy);
+-	    if(Is_airlevel(&u.uz))
+-		You("begin to tumble in place.");
+-	    else if (Is_waterlevel(&u.uz) && !no_msg)
++	    if(Is_airlevel(&u.uz)) {
++		if (Flying) You("feel less buoyant."); 
++		else You("begin to tumble in place."); 
++	    } else if (Is_waterlevel(&u.uz) && !no_msg)
+ 		You_feel("heavier.");
+ 	    /* u.uinwater msgs already in spoteffects()/drown() */
+ 	    else if (!u.uinwater && !no_msg) {
+@@ -2377,10 +2379,11 @@
+ 			      "splashed down" : sokoban_trap ? "crashed" :
+ 			      "hit the ground");
+ 		    else {
+-			if (!sokoban_trap)
+-			    You("float gently to the %s.",
+-				surface(u.ux, u.uy));
+-			else {
++			if (!sokoban_trap) {
++			    if (Flying) You("feel less buoyant."); 
++			    else You("float gently to the %s.", 
++				    surface(u.ux, u.uy));
++			} else {
+ 			    /* Justification elsewhere for Sokoban traps
+ 			     * is based on air currents. This is
+ 			     * consistent with that.
+@@ -2678,12 +2681,15 @@
      return retval;
  }
  
@@ -371,7 +415,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  
  	/* Scrolls, spellbooks, potions, weapons and
  	   pieces of armor may get affected by the water */
-@@ -2724,6 +2727,7 @@
+@@ -2724,6 +2730,7 @@
  				/* damage player/monster? */
  				pline("A potion explodes!");
  				delobj(obj);
@@ -379,7 +423,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  				continue;
  			} else if (obj->odiluted) {
  				obj->otyp = POT_WATER;
-@@ -2740,7 +2744,9 @@
+@@ -2740,7 +2747,9 @@
  			   (uarmc->cursed && !rn2(3)))
  				obj->oeroded++;
  		}

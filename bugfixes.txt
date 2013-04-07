@@ -46,6 +46,11 @@ List of bugs fixed in this repository:
              Author:  Jared Minch
              Source:  https://github.com/sgrunt/GruntHack/commit/3df702230a3f767a4c7dd6f98d0156ed621a49ac
 
+* C343-72:   You get confusing messages when you stop levitating while on a
+             flying steed.
+             Author:  Edoardo Spadolini
+             Source:  http://sourceforge.net/apps/trac/unnethack/changeset/958
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
