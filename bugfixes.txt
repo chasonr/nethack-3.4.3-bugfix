@@ -70,6 +70,12 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/6da48e6dd87737f1e207a2759e69075d62eb9569
 
+* C343-351:  Alchemy-caused explosions don't wake nearby monsters.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/63dbb6485ccc8df690cdbd8eb2cec4d0f30139e4
+             Comment: The original patch makes two additional changes to
+                      features present in GruntHack but not in vanilla.
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
