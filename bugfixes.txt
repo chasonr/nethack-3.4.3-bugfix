@@ -66,6 +66,10 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/e7afc1b022dd5e1b39dd2c69db077b533e66f3f4
 
+* C343-109:  There is a grammar error in the Tourist leader's greeting.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/6da48e6dd87737f1e207a2759e69075d62eb9569
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
