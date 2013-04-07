@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 14:57:34.625626282 -0400
-@@ -0,0 +1,103 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 19:17:49.176510707 -0400
+@@ -0,0 +1,109 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -98,6 +98,12 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Author:  Ray Chason
 +             Source:  http://bilious.alt.org/?313
 +
++Bugs not mentioned on the DevTeam's website 
++
++*            Color of mithril objects is wrong 
++             Author: Bulwersator
++             Source: https://github.com/Bulwersator/UnNetHackPlus/commit/67c167367b8b118c9bc9b7f4e19bdd41bbc3b308
++
 +Rejected patches:
 +
 +* M343-1:    Release code does not build under Carbon.
@@ -117,6 +123,17 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  As you can %x, we are desperately in need of your talents.  Someone must
  defeat %n if our town is become what it once was.
  
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/color.h nethack-3.4.3-bugfix/include/color.h
+--- nethack-3.4.3/include/color.h	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/include/color.h	2013-04-07 19:17:49.176510707 -0400
+@@ -38,6 +38,7 @@
+ #define HI_METAL	CLR_CYAN
+ #define HI_COPPER	CLR_YELLOW
+ #define HI_SILVER	CLR_GRAY
++#define HI_MITHRIL	HI_SILVER
+ #define HI_GOLD		CLR_YELLOW
+ #define HI_LEATHER	CLR_BROWN
+ #define HI_CLOTH	CLR_BROWN
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/extern.h nethack-3.4.3-bugfix/include/extern.h
 --- nethack-3.4.3/include/extern.h	2012-01-19 19:21:43.000000000 -0500
 +++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 22:13:58.751794758 -0400
@@ -342,6 +359,34 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  			    if (Levitation || Flying ||
  						is_clinger(youmonst.data)) {
  				    pline("A chasm opens up under you!");
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/objects.c nethack-3.4.3-bugfix/src/objects.c
+--- nethack-3.4.3/src/objects.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/objects.c	2013-04-07 19:17:49.176510707 -0400
+@@ -377,9 +377,9 @@
+ ARMOR("banded mail", (char *)0,
+ 	1, 0, 1, 0,	72, 5, 350,  90,  4, 0, ARM_SUIT, IRON, HI_METAL),
+ ARMOR("dwarvish mithril-coat", (char *)0,
+-	1, 0, 0, 0,	10, 1, 150, 240,  4, 3, ARM_SUIT, MITHRIL, HI_METAL),
++	1, 0, 0, 0,	10, 1, 150, 240,  4, 3, ARM_SUIT, MITHRIL, HI_MITHRIL),
+ ARMOR("elven mithril-coat", (char *)0,
+-	1, 0, 0, 0,	15, 1, 150, 240,  5, 3, ARM_SUIT, MITHRIL, HI_METAL),
++	1, 0, 0, 0,	15, 1, 150, 240,  5, 3, ARM_SUIT, MITHRIL, HI_MITHRIL),
+ ARMOR("chain mail", (char *)0,
+ 	1, 0, 0, 0,	72, 5, 300,  75,  5, 1, ARM_SUIT, IRON, HI_METAL),
+ ARMOR("orcish chain mail", "crude chain mail",
+@@ -554,10 +554,10 @@
+ AMULET("amulet of magical breathing", "octagonal",      MAGICAL_BREATHING, 65),
+ OBJECT(OBJ("cheap plastic imitation of the Amulet of Yendor",
+ 	"Amulet of Yendor"), BITS(0,0,1,0,0,0,0,0,0,0,0,0,PLASTIC), 0,
+-	AMULET_CLASS, 0, 0, 20,    0, 0, 0, 0, 0,  1, HI_METAL),
++	AMULET_CLASS, 0, 0, 20,    0, 0, 0, 0, 0,  1, HI_MITHRIL),
+ OBJECT(OBJ("Amulet of Yendor",	/* note: description == name */
+ 	"Amulet of Yendor"), BITS(0,0,1,0,1,0,1,1,0,0,0,0,MITHRIL), 0,
+-	AMULET_CLASS, 0, 0, 20, 30000, 0, 0, 0, 0, 20, HI_METAL),
++	AMULET_CLASS, 0, 0, 20, 30000, 0, 0, 0, 0, 20, HI_MITHRIL),
+ #undef AMULET
+ 
+ /* tools ... */
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/potion.c nethack-3.4.3-bugfix/src/potion.c
 --- nethack-3.4.3/src/potion.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/potion.c	2013-04-07 14:33:07.187207022 -0400
