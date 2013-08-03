@@ -32,7 +32,7 @@ List of bugs fixed in this repository:
 
 * C343-162:  Using Magicbane may cause an ungrammatical message.
              Author:  Ray Chason
-             Source:  Uploaded to Bilious, but not public as of this writing.
+             Source:  http://bilious.alt.org/?445
 
 * C343-1:    At a pit the game can give messages with poor grammar.
              Author:  Tung Nguyen
