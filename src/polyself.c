@@ -332,7 +332,6 @@ int	mntmp;
 {
 	boolean sticky = sticks(youmonst.data) && u.ustuck && !u.uswallow,
 		was_blind = !!Blind, dochange = FALSE;
-	boolean could_pass_walls = Passes_walls;
 	int mlvl;
 
 	if (mvitals[mntmp].mvflags & G_GENOD) {	/* allow G_EXTINCT */
@@ -464,13 +463,6 @@ int	mntmp;
 	else
 		u.uundetected = 0;
 
-	if (u.utraptype == TT_PIT) {
-	    if (could_pass_walls && !Passes_walls) {
-		u.utrap = rn1(6,2);
-	    } else if (!could_pass_walls && Passes_walls) {
-		u.utrap = 0;
-	    }
-	}
 	if (was_blind && !Blind) {	/* previous form was eyeless */
 	    Blinded = 1L;
 	    make_blinded(0L, TRUE);	/* remove blindness */

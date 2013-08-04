@@ -81,6 +81,11 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/ccf75ee3bce3fe3295870c262ad28845e9f0bac8
 
+* C343-17:   After polymorphing into a xorn and returning to human form, player
+             can be stuck in a pit that isn't there. 
+             Author:  Bulwersator
+             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/f58badbede0dc6ebcf2a0f4218bfdb0f8423acaa
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
