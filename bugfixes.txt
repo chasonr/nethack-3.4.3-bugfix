@@ -115,6 +115,10 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/3d7a8538f5b6d58b68d9b50c6a370bf66d8255e7
 
+* C343-115:  Sleeping or paralyzed unicorns can catch gems.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/b977028350449cdbcd3b90292de637e9a92d9c77
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.

@@ -1239,7 +1239,8 @@ register struct obj   *obj;
 	    tmp += 1000; /* Guaranteed hit */
 	}
 
-	if (obj->oclass == GEM_CLASS && is_unicorn(mon->data)) {
+	if (obj->oclass == GEM_CLASS && is_unicorn(mon->data) &&
+	    mon->mcanmove && !mon->msleeping && !mon->mburied) {
 	    if (mon->mtame) {
 		pline("%s catches and drops %s.", Monnam(mon), the(xname(obj)));
 		return 0;
