@@ -146,6 +146,10 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/7831df3dda7f811c0609cba0523e6b24bdf1d23e
 
+* C343-406:  One of the coyote names is spelled wrong. 
+             Author:  Bulwersator
+             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/2304213f3e68baa89a539984cde950ded066ddd0
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
