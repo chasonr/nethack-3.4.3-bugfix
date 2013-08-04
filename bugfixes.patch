@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-04-07 19:17:49.176510707 -0400
-@@ -0,0 +1,109 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2013-08-03 22:19:37.445494274 -0400
+@@ -0,0 +1,182 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -36,7 +36,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +
 +* C343-162:  Using Magicbane may cause an ungrammatical message.
 +             Author:  Ray Chason
-+             Source:  Uploaded to Bilious, but not public as of this writing.
++             Source:  http://bilious.alt.org/?445
 +
 +* C343-1:    At a pit the game can give messages with poor grammar.
 +             Author:  Tung Nguyen
@@ -85,6 +85,79 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Author:  SGrunt
 +             Source:  https://github.com/sgrunt/GruntHack/commit/ccf75ee3bce3fe3295870c262ad28845e9f0bac8
 +
++* C343-17:   After polymorphing into a xorn and returning to human form, player
++             can be stuck in a pit that isn't there. 
++             Author:  Bulwersator
++             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/f58badbede0dc6ebcf2a0f4218bfdb0f8423acaa
++
++* C343-24:   Documented default for option "null" is "off"; default is actually
++             "on".
++             Author:  Bulwersator
++             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/a6d7e394d2f5a624205fd082545650915f2e3ad9
++
++* C343-52:	 Worn or wielded objects destroyed by dipping into lit potions of
++             oil are not handled properly; this can result in odd game behavior.
++             Author:  Patric Mueller
++             Source:  http://sourceforge.net/p/unnethack/code/1422/
++
++* C343-57:   #enhance command descriptions in Guidebook and game do not match.
++             Author:  SGrunt (via Bulwersator)
++             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/5e60f1e82d9a26f7c899a01584c6304fcd41ad09
++
++* C343-58:	 #conduct command description grammar is poor
++             Author:  SGrunt (via Bulwersator)
++             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/2c09c93ade52da17a16fd0cd1304952ceb0f3387
++
++* C343-77:   Some messages referring to monsters that look like horses refer
++             to claws.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/0333ed27591ecbb57f90e7adc6ae8aecfdbaf7a5
++
++* C343-95:   If killed by the wish from a magic lamp (or similar situation) and
++             a bones file is produced, the bones file has the lamp in the wrong
++             state.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/3d7a8538f5b6d58b68d9b50c6a370bf66d8255e7
++
++* C343-115:  Sleeping or paralyzed unicorns can catch gems.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/b977028350449cdbcd3b90292de637e9a92d9c77
++
++* C343-134:  Being petrified by swallowing a cockatrice violates foodless
++             conduct.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/a65cf627f512c63fbae610e2f94806c86b0fe118
++
++* C343-243:  Hero can throw without hands.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/b6416957f7e6dd468d9491be8f7ca3814b1a5622
++
++* C343-305:  Attacking with an applied polearm ignores the "confirm" option.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/dca24d18e51eea2ca7b71dca2564b266cc73d27d
++
++* C343-343:  Helm of Opposite alignment gives incorrect piety level.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/fbf885966b11084817ad2ca2003db3bd5e28d079
++
++* C343-345:  Attempting to remove cursed lenses gives a message with poor
++             grammar.
++             Author:  SGrunt (via Bulwersator)
++             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/aba5543d03c5c0d914c51705d3166e8d5a687660
++
++* C343-383:  Applying a bullwhip while hero is at edge of map may cause a panic
++             or crash.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/7831df3dda7f811c0609cba0523e6b24bdf1d23e
++
++* C343-406:  One of the coyote names is spelled wrong. 
++             Author:  Bulwersator
++             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/2304213f3e68baa89a539984cde950ded066ddd0
++
++* C343-409:  Unlocking a mimic pretending to be a door is not handled properly.
++             Author:  SGrunt
++             Source:  https://github.com/sgrunt/GruntHack/commit/18465ffea7214bff81ec5b5687222b63cdd7460b
++
 +* SC343-11:  It's possible to easily find the identity of a high priest on the
 +             Astral plane.
 +* SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
@@ -111,9 +184,33 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +                      refer to lines that do not exist.
 +             Author:  Kevin Hugo
 +             Source:  http://www.nethack.org/v343/bugmore/src-diff-mac.txt
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/dat/cmdhelp nethack-3.4.3-bugfix/dat/cmdhelp
+--- nethack-3.4.3/dat/cmdhelp	2003-12-07 18:39:12.000000000 -0500
++++ nethack-3.4.3-bugfix/dat/cmdhelp	2013-08-03 21:11:19.689365008 -0400
+@@ -103,7 +103,7 @@
+ M-a     Adjust inventory letters
+ M-c     Talk to someone
+ M-d     Dip an object into something
+-M-e     Advance or check weapons skills
++M-e     Advance or check weapon and spell skills
+ M-f     Force a lock
+ M-i     Invoke an object's special powers
+ M-j     Jump to another location
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/dat/hh nethack-3.4.3-bugfix/dat/hh
+--- nethack-3.4.3/dat/hh	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/dat/hh	2013-08-03 21:11:23.157365117 -0400
+@@ -88,7 +88,7 @@
+ M-a     adjust  adjust inventory letters
+ M-c     chat    talk to someone
+ M-d     dip     dip an object into something
+-M-e     enhance advance or check weapons skills
++M-e     enhance advance or check weapon and spell skills
+ M-f     force   force a lock
+ M-i     invoke  invoke an object's special powers
+ M-j     jump    jump to another location
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/dat/quest.txt nethack-3.4.3-bugfix/dat/quest.txt
 --- nethack-3.4.3/dat/quest.txt	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/dat/quest.txt	2013-04-07 14:27:24.781985382 -0400
++++ nethack-3.4.3-bugfix/dat/quest.txt	2013-04-07 14:27:24.000000000 -0400
 @@ -2619,7 +2619,7 @@
  "Did you bring me back any souvenirs?"
  %E
@@ -123,9 +220,74 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  As you can %x, we are desperately in need of your talents.  Someone must
  defeat %n if our town is become what it once was.
  
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/doc/Guidebook.mn nethack-3.4.3-bugfix/doc/Guidebook.mn
+--- nethack-3.4.3/doc/Guidebook.mn	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/doc/Guidebook.mn	2013-08-03 21:16:35.445374969 -0400
+@@ -678,7 +678,7 @@
+ .lp #chat
+ Talk to someone.
+ .lp #conduct
+-List which challenges you have adhered to.  See the section below entitled
++List status of voluntary challenges.  See the section below entitled
+ ``Conduct'' for details.
+ .lp #dip
+ Dip an object into something.
+@@ -2006,7 +2006,7 @@
+ Since the news is shown at the beginning of the game, there's no point
+ in setting this with the `O' command.
+ .lp "null    "
+-Send padding nulls to the terminal (default off).
++Send padding nulls to the terminal (default on).
+ .lp number_pad
+ Use the number keys to move instead of [yuhjklbn] (default 0 or off).
+ (number_pad:2 invokes the old DOS behavior where `5' means `g', meta-`5'
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/doc/Guidebook.tex nethack-3.4.3-bugfix/doc/Guidebook.tex
+--- nethack-3.4.3/doc/Guidebook.tex	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/doc/Guidebook.tex	2013-08-03 21:16:40.417375125 -0400
+@@ -899,7 +899,7 @@
+ Talk to someone.
+ %.lp
+ \item[\tb{\#conduct}]
+-List which challenges you have adhered to.  See the section below entitled
++List status of voluntary challenges.  See the section below entitled
+ ``Conduct'' for details.
+ %.lp
+ \item[\tb{\#dip}]
+@@ -2463,7 +2463,7 @@
+ in setting this with the `{\tt O}' command.
+ %.lp
+ \item[\ib{null}]
+-Send padding nulls to the terminal (default off).
++Send padding nulls to the terminal (default on).
+ %.lp
+ \item[\ib{number\_pad}]
+ Use the number keys to move instead of {\tt [yuhjklbn]} (default 0 or off).
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/doc/Guidebook.txt nethack-3.4.3-bugfix/doc/Guidebook.txt
+--- nethack-3.4.3/doc/Guidebook.txt	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/doc/Guidebook.txt	2013-08-03 21:16:54.633375574 -0400
+@@ -876,8 +876,8 @@
+                Talk to someone.
+ 
+           #conduct
+-               List which challenges you have adhered to.  See the  section
+-               below entitled ``Conduct'' for details.
++               List status of voluntary challenges.  See the  section below
++               entitled ``Conduct'' for details.
+ 
+           #dip Dip an object into something.
+ 
+@@ -2584,7 +2584,7 @@
+             setting this with the `O' command.
+ 
+           null
+-            Send padding nulls to the terminal (default off).
++            Send padding nulls to the terminal (default on).
+ 
+           number_pad
+             Use the number keys to move instead of [yuhjklbn] (default 0 or
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/color.h nethack-3.4.3-bugfix/include/color.h
 --- nethack-3.4.3/include/color.h	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/include/color.h	2013-04-07 19:17:49.176510707 -0400
++++ nethack-3.4.3-bugfix/include/color.h	2013-04-07 19:17:49.000000000 -0400
 @@ -38,6 +38,7 @@
  #define HI_METAL	CLR_CYAN
  #define HI_COPPER	CLR_YELLOW
@@ -136,7 +298,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  #define HI_CLOTH	CLR_BROWN
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/extern.h nethack-3.4.3-bugfix/include/extern.h
 --- nethack-3.4.3/include/extern.h	2012-01-19 19:21:43.000000000 -0500
-+++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 22:13:58.751794758 -0400
++++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 22:13:58.000000000 -0400
 @@ -1576,6 +1576,7 @@
  E const char *FDECL(a_gname_at, (XCHAR_P x,XCHAR_P y));
  E const char *FDECL(align_gname, (ALIGNTYP_P));
@@ -165,7 +327,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  E void FDECL(buzz, (int,int,XCHAR_P,XCHAR_P,int,int));
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/README nethack-3.4.3-bugfix/README
 --- nethack-3.4.3/README	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/README	2013-03-31 21:01:18.387440642 -0400
++++ nethack-3.4.3-bugfix/README	2013-03-31 21:01:18.000000000 -0400
 @@ -1,3 +1,19 @@
 +This repository consists of the original vanilla NetHack 3.4.3 sources, plus
 +fixes for bugs discovered and reported by the community -- primarily on
@@ -188,7 +350,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  NetHack 3.4 is an enhancement to the dungeon exploration game NetHack.
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/apply.c nethack-3.4.3-bugfix/src/apply.c
 --- nethack-3.4.3/src/apply.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/apply.c	2013-03-31 21:51:15.948582942 -0400
++++ nethack-3.4.3-bugfix/src/apply.c	2013-08-03 22:08:40.625473554 -0400
 @@ -80,7 +80,7 @@
  	} else if ((mtmp = bhit(u.dx, u.dy, COLNO, FLASHED_LIGHT,
  				(int FDECL((*),(MONST_P,OBJ_P)))0,
@@ -236,9 +398,63 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		if (!obj->lamplit)
  		    You("try to light %s...", the(xname(obj)));
  		use_lamp(obj);
+@@ -1183,12 +1187,12 @@
+ 	if (uwep->otyp == MAGIC_LAMP) {
+ 	    if (uwep->spe > 0 && !rn2(3)) {
+ 		check_unpaid_usage(uwep, TRUE);		/* unusual item use */
+-		djinni_from_bottle(uwep);
+ 		makeknown(MAGIC_LAMP);
+ 		uwep->otyp = OIL_LAMP;
+ 		uwep->spe = 0; /* for safety */
+ 		uwep->age = rn1(500,1000);
+ 		if (uwep->lamplit) begin_burn(uwep, TRUE);
++		djinni_from_bottle(uwep);
+ 		update_inventory();
+ 	    } else if (rn2(2) && !Blind)
+ 		You("see a puff of smoke.");
+@@ -2124,6 +2128,7 @@
+     if (!getdir((char *)0)) return res;
+ 
+     if (Stunned || (Confusion && !rn2(5))) confdir();
++    mtmp = (isok(rx, ry)) ? m_at(rx, ry) : (struct monst *)0; 
+     rx = u.ux + u.dx;
+     ry = u.uy + u.dy;
+     mtmp = m_at(rx, ry);
+@@ -2208,6 +2213,13 @@
+ 	 */
+ 	const char *wrapped_what = (char *)0;
+ 
++	if (!isok(rx, ry)) { 
++	    pline("%s", 
++		  Is_airlevel(&u.uz) ? "You snap your whip through thin air."
++			       : msg_snap);
++	    return 1;
++	}
++
+ 	if (mtmp) {
+ 	    if (bigmonst(mtmp->data)) {
+ 		wrapped_what = strcpy(buf, mon_nam(mtmp));
+@@ -2388,7 +2400,7 @@
+ 	cc.x = u.ux;
+ 	cc.y = u.uy;
+ 	if (getpos(&cc, TRUE, "the spot to hit") < 0)
+-	    return 0;	/* user pressed ESC */
++	    return res;	/* user pressed ESC */
+ 
+ 	/* Calculate range */
+ 	typ = uwep_skill_type();
+@@ -2415,6 +2427,8 @@
+ 	if ((mtmp = m_at(cc.x, cc.y)) != (struct monst *)0) {
+ 	    int oldhp = mtmp->mhp;
+ 
++	    if (attack_checks(mtmp, obj)) return res;
++
+ 	    bhitpos = cc;
+ 	    check_caitiff(mtmp);
+ 	    (void) thitmonst(mtmp, uwep);
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/artifact.c nethack-3.4.3-bugfix/src/artifact.c
 --- nethack-3.4.3/src/artifact.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/artifact.c	2013-03-31 22:55:38.349180887 -0400
++++ nethack-3.4.3-bugfix/src/artifact.c	2013-03-31 22:55:38.000000000 -0400
 @@ -905,7 +905,7 @@
      if (youattack || youdefend || vis) {
  	(void) upstart(hittee);	/* capitalize */
@@ -257,9 +473,37 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		  buf, (do_stun && do_confuse) ? '!' : '.');
  	}
      }
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/cmd.c nethack-3.4.3-bugfix/src/cmd.c
+--- nethack-3.4.3/src/cmd.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/cmd.c	2013-08-03 21:17:03.125375842 -0400
+@@ -1477,9 +1477,9 @@
+ struct ext_func_tab extcmdlist[] = {
+ 	{"adjust", "adjust inventory letters", doorganize, TRUE},
+ 	{"chat", "talk to someone", dotalk, TRUE},	/* converse? */
+-	{"conduct", "list which challenges you have adhered to", doconduct, TRUE},
++	{"conduct", "list status of voluntary challenges", doconduct, TRUE},
+ 	{"dip", "dip an object into something", dodip, FALSE},
+-	{"enhance", "advance or check weapons skills", enhance_weapon_skill,
++	{"enhance", "advance or check weapon and spell skills", enhance_weapon_skill,
+ 							TRUE},
+ 	{"force", "force a lock", doforce, FALSE},
+ 	{"invoke", "invoke an object's powers", doinvoke, TRUE},
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/dig.c nethack-3.4.3-bugfix/src/dig.c
+--- nethack-3.4.3/src/dig.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/dig.c	2013-08-03 20:05:53.661241159 -0400
+@@ -548,8 +548,7 @@
+ 
+ 	    if(at_u) {
+ 		if (!wont_fall) {
+-		    if (!Passes_walls)
+-			u.utrap = rn1(4,2);
++		    u.utrap = rn1(4,2);
+ 		    u.utraptype = TT_PIT;
+ 		    vision_full_recalc = 1;	/* vision limits change */
+ 		} else
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do.c nethack-3.4.3-bugfix/src/do.c
 --- nethack-3.4.3/src/do.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/do.c	2013-04-02 00:33:09.860525748 -0400
++++ nethack-3.4.3-bugfix/src/do.c	2013-04-02 00:33:09.000000000 -0400
 @@ -208,15 +208,14 @@
  		    map_background(x, y, 0);
  		    newsym(x, y);
@@ -280,7 +524,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  				The(xname(obj)), otense(obj, "tumble"),
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/dokick.c nethack-3.4.3-bugfix/src/dokick.c
 --- nethack-3.4.3/src/dokick.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/dokick.c	2013-03-31 21:51:15.948582942 -0400
++++ nethack-3.4.3-bugfix/src/dokick.c	2013-03-31 21:51:15.000000000 -0400
 @@ -553,7 +553,7 @@
  	mon = bhit(u.dx, u.dy, range, KICKED_WEAPON,
  		   (int FDECL((*),(MONST_P,OBJ_P)))0,
@@ -290,9 +534,30 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  
  	if(mon) {
  	    if (mon->isshk &&
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do_name.c nethack-3.4.3-bugfix/src/do_name.c
+--- nethack-3.4.3/src/do_name.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/do_name.c	2013-08-03 22:13:43.533483110 -0400
+@@ -1024,7 +1024,7 @@
+ 	"Evereadii Eatibus","Apetitius Giganticus",
+ 	"Hungrii Flea-Bagius","Overconfidentii Vulgaris",
+ 	"Caninus Nervous Rex","Grotesques Appetitus",
+-	"Nemesis Riduclii","Canis latrans"
++	"Nemesis Ridiculii","Canis latrans"
+ };
+ 	
+ char *
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/dothrow.c nethack-3.4.3-bugfix/src/dothrow.c
 --- nethack-3.4.3/src/dothrow.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/dothrow.c	2013-03-31 21:51:15.952582853 -0400
++++ nethack-3.4.3-bugfix/src/dothrow.c	2013-08-03 21:50:52.581439862 -0400
+@@ -203,7 +203,7 @@
+ 	shotlimit = (multi || save_cm) ? multi + 1 : 0;
+ 	multi = 0;		/* reset; it's been used up */
+ 
+-	if (notake(youmonst.data)) {
++	if (notake(youmonst.data) || nohands(youmonst.data)) {
+ 	    You("are physically incapable of throwing anything.");
+ 	    return 0;
+ 	}
 @@ -980,14 +980,17 @@
  
  		if (Underwater) range = 1;
@@ -312,7 +577,17 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	}
  
  	if (mon) {
-@@ -1748,7 +1751,7 @@
+@@ -1236,7 +1239,8 @@
+ 	    tmp += 1000; /* Guaranteed hit */
+ 	}
+ 
+-	if (obj->oclass == GEM_CLASS && is_unicorn(mon->data)) {
++	if (obj->oclass == GEM_CLASS && is_unicorn(mon->data) &&
++	    mon->mcanmove && !mon->msleeping && !mon->mburied) {
+ 	    if (mon->mtame) {
+ 		pline("%s catches and drops %s.", Monnam(mon), the(xname(obj)));
+ 		return 0;
+@@ -1748,7 +1752,7 @@
  			mon = bhit(u.dx, u.dy, range, THROWN_WEAPON,
  				   (int FDECL((*),(MONST_P,OBJ_P)))0,
  				   (int FDECL((*),(OBJ_P,OBJ_P)))0,
@@ -321,9 +596,70 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  			if(mon) {
  			    if (ghitm(mon, obj))	/* was it caught? */
  				return 1;
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do_wear.c nethack-3.4.3-bugfix/src/do_wear.c
+--- nethack-3.4.3/src/do_wear.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/do_wear.c	2013-08-03 22:03:00.905462838 -0400
+@@ -317,6 +317,7 @@
+ 		if (u.ualign.type == A_NEUTRAL)
+ 		    u.ualign.type = rn2(2) ? A_CHAOTIC : A_LAWFUL;
+ 		else u.ualign.type = -(u.ualign.type);
++		u.ualign.record = -1; /* consistent with altar conversion */
+ 		u.ublessed = 0; /* lose your god's protection */
+ 	     /* makeknown(uarmh->otyp);   -- moved below, after xname() */
+ 		/*FALLTHRU*/
+@@ -378,6 +379,7 @@
+ 	    break;
+ 	case HELM_OF_OPPOSITE_ALIGNMENT:
+ 	    u.ualign.type = u.ualignbase[A_CURRENT];
++	    u.ualign.record = -1; /* consistent with altar conversion */
+ 	    u.ublessed = 0; /* lose the other god's protection */
+ 	    flags.botl = 1;
+ 	    break;
+@@ -1168,7 +1170,7 @@
+ 	/* Curses, like chickens, come home to roost. */
+ 	if((otmp == uwep) ? welded(otmp) : (int)otmp->cursed) {
+ 		You("can't.  %s cursed.",
+-			(is_boots(otmp) || is_gloves(otmp) || otmp->quan > 1L)
++			(is_boots(otmp) || is_gloves(otmp) otmp->otyp == LENSES || otmp->quan > 1L)
+ 			? "They are" : "It is");
+ 		otmp->bknown = TRUE;
+ 		return(1);
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/hack.c nethack-3.4.3-bugfix/src/hack.c
+--- nethack-3.4.3/src/hack.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/hack.c	2013-08-03 20:07:17.553243805 -0400
+@@ -1135,7 +1135,10 @@
+ 		return;
+ 	}
+ 	if(u.utrap) {
+-		if(u.utraptype == TT_PIT) {
++	        if(u.utraptype == TT_PIT && Passes_walls) {
++		    You("phase through walls and escape from the pit."); 
++		    u.utrap = 0;
++	        } else if(u.utraptype == TT_PIT) {
+ 		    if (!rn2(2) && sobj_at(BOULDER, u.ux, u.uy)) {
+ 			Your("%s gets stuck in a crevice.", body_part(LEG));
+ 			display_nhwindow(WIN_MESSAGE, FALSE);
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/lock.c nethack-3.4.3-bugfix/src/lock.c
+--- nethack-3.4.3/src/lock.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/lock.c	2013-08-03 22:18:43.253492565 -0400
+@@ -373,6 +373,14 @@
+ 		    pline("I don't think %s would appreciate that.", mon_nam(mtmp));
+ 		return(0);
+ 	    }
++	    if (mtmp                                    &&
++	        (mtmp->m_ap_type == M_AP_FURNITURE)     &&
++		(mtmp->mappearance == S_hcdoor ||
++			mtmp->mappearance == S_vcdoor)	&&
++		!Protection_from_shape_changers)	 {
++		stumble_onto_mimic(mtmp);
++	        return(1);
++	    }
+ 	    if(!IS_DOOR(door->typ)) {
+ 		if (is_drawbridge_wall(cc.x,cc.y) >= 0)
+ 		    You("%s no lock on the drawbridge.",
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/mhitu.c nethack-3.4.3-bugfix/src/mhitu.c
 --- nethack-3.4.3/src/mhitu.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/mhitu.c	2013-04-07 13:55:23.548970930 -0400
++++ nethack-3.4.3-bugfix/src/mhitu.c	2013-04-07 13:55:23.000000000 -0400
 @@ -943,6 +943,10 @@
  				goto do_stone;
  			}
@@ -337,7 +673,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  				artifact_hit(mtmp, &youmonst, otmp, &dmg,dieroll)))
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/monmove.c nethack-3.4.3-bugfix/src/monmove.c
 --- nethack-3.4.3/src/monmove.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/monmove.c	2013-04-07 13:17:00.537969508 -0400
++++ nethack-3.4.3-bugfix/src/monmove.c	2013-04-07 13:17:00.000000000 -0400
 @@ -212,6 +212,8 @@
  boolean first;
  boolean fleemsg;
@@ -347,9 +683,22 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	if (u.ustuck == mtmp) {
  	    if (u.uswallow)
  		expels(mtmp, mtmp->data, TRUE);
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/mthrowu.c nethack-3.4.3-bugfix/src/mthrowu.c
+--- nethack-3.4.3/src/mthrowu.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/mthrowu.c	2013-08-03 21:30:13.933400788 -0400
+@@ -328,7 +328,8 @@
+ 
+ 		    if (singleobj->oclass == GEM_CLASS &&
+ 			    singleobj->otyp <= LAST_GEM+9 /* 9 glass colors */
+-			    && is_unicorn(youmonst.data)) {
++			    && is_unicorn(youmonst.data)
++			    && multi >= 0) {
+ 			if (singleobj->otyp > LAST_GEM) {
+ 			    You("catch the %s.", xname(singleobj));
+ 			    You("are not interested in %s junk.",
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/music.c nethack-3.4.3-bugfix/src/music.c
 --- nethack-3.4.3/src/music.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/music.c	2013-04-07 14:18:04.857419811 -0400
++++ nethack-3.4.3-bugfix/src/music.c	2013-04-07 14:18:04.000000000 -0400
 @@ -316,7 +316,7 @@
  				    xkilled(mtmp,0);
  				}
@@ -361,7 +710,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  				    pline("A chasm opens up under you!");
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/objects.c nethack-3.4.3-bugfix/src/objects.c
 --- nethack-3.4.3/src/objects.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/objects.c	2013-04-07 19:17:49.176510707 -0400
++++ nethack-3.4.3-bugfix/src/objects.c	2013-04-07 19:17:49.000000000 -0400
 @@ -377,9 +377,9 @@
  ARMOR("banded mail", (char *)0,
  	1, 0, 1, 0,	72, 5, 350,  90,  4, 0, ARM_SUIT, IRON, HI_METAL),
@@ -387,9 +736,43 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  #undef AMULET
  
  /* tools ... */
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/polyself.c nethack-3.4.3-bugfix/src/polyself.c
+--- nethack-3.4.3/src/polyself.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/polyself.c	2013-08-03 21:20:40.765382707 -0400
+@@ -332,7 +332,6 @@
+ {
+ 	boolean sticky = sticks(youmonst.data) && u.ustuck && !u.uswallow,
+ 		was_blind = !!Blind, dochange = FALSE;
+-	boolean could_pass_walls = Passes_walls;
+ 	int mlvl;
+ 
+ 	if (mvitals[mntmp].mvflags & G_GENOD) {	/* allow G_EXTINCT */
+@@ -464,13 +463,6 @@
+ 	else
+ 		u.uundetected = 0;
+ 
+-	if (u.utraptype == TT_PIT) {
+-	    if (could_pass_walls && !Passes_walls) {
+-		u.utrap = rn1(6,2);
+-	    } else if (!could_pass_walls && Passes_walls) {
+-		u.utrap = 0;
+-	    }
+-	}
+ 	if (was_blind && !Blind) {	/* previous form was eyeless */
+ 	    Blinded = 1L;
+ 	    make_blinded(0L, TRUE);	/* remove blindness */
+@@ -1153,7 +1145,7 @@
+ 		"light headed", "neck", "spine", "toe",
+ 		"feathers", "blood", "lung", "bill", "stomach" },
+ 	*horse_parts[] = { "foreleg", "eye", "face", "forehoof", "hoof tip",
+-		"rear hoof", "foreclaw", "hooved", "head", "rear leg",
++		"rear hoof", "forehoof", "hooved", "head", "rear leg",
+ 		"light headed", "neck", "backbone", "rear hoof tip",
+ 		"mane", "blood", "lung", "nose", "stomach"},
+ 	*sphere_parts[] = { "appendage", "optic nerve", "body", "tentacle",
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/potion.c nethack-3.4.3-bugfix/src/potion.c
 --- nethack-3.4.3/src/potion.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/potion.c	2013-04-07 14:33:07.187207022 -0400
++++ nethack-3.4.3-bugfix/src/potion.c	2013-08-03 20:58:40.377341055 -0400
 @@ -1438,6 +1438,7 @@
  		if (obj->otyp == POT_ACID) {
  			pline("It boils vigorously!");
@@ -406,9 +789,17 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  			exercise(A_STR, FALSE);
  			if (!breathless(youmonst.data) || haseyes(youmonst.data))
  				potionbreathe(obj);
+@@ -1783,6 +1785,7 @@
+ 			    obj->oeroded == MAX_ERODE ? "destroys" : "damages",
+ 			    yname(obj));
+ 		    if (obj->oeroded == MAX_ERODE) {
++			setnotworn(obj);
+ 			obj_extract_self(obj);
+ 			obfree(obj, (struct obj *)0);
+ 			obj = (struct obj *) 0;
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/pray.c nethack-3.4.3-bugfix/src/pray.c
 --- nethack-3.4.3/src/pray.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/pray.c	2013-03-31 22:13:58.751794758 -0400
++++ nethack-3.4.3-bugfix/src/pray.c	2013-03-31 22:13:58.000000000 -0400
 @@ -1788,12 +1788,21 @@
  halu_gname(alignment)
  aligntyp alignment;
@@ -436,7 +827,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
       case 1:	gnam = roles[which].ngod; break;
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/priest.c nethack-3.4.3-bugfix/src/priest.c
 --- nethack-3.4.3/src/priest.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/priest.c	2013-03-31 22:13:58.751794758 -0400
++++ nethack-3.4.3-bugfix/src/priest.c	2013-03-31 22:13:58.000000000 -0400
 @@ -274,7 +274,14 @@
  				Strcat(pname, "priest ");
  		}
@@ -454,7 +845,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	/* use emin instead of epri */
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/read.c nethack-3.4.3-bugfix/src/read.c
 --- nethack-3.4.3/src/read.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/read.c	2013-04-07 14:24:21.833580936 -0400
++++ nethack-3.4.3-bugfix/src/read.c	2013-04-07 14:24:21.000000000 -0400
 @@ -804,7 +804,10 @@
  			known = TRUE;
  		} else {	/* armor and scroll both cursed */
@@ -469,7 +860,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	    }
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/shk.c nethack-3.4.3-bugfix/src/shk.c
 --- nethack-3.4.3/src/shk.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/shk.c	2013-03-31 21:56:19.689916704 -0400
++++ nethack-3.4.3-bugfix/src/shk.c	2013-03-31 21:56:19.000000000 -0400
 @@ -833,6 +833,12 @@
  #endif
  		}
@@ -485,7 +876,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  #endif /* OVLB */
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/sounds.c nethack-3.4.3-bugfix/src/sounds.c
 --- nethack-3.4.3/src/sounds.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/sounds.c	2013-04-07 13:02:41.236262972 -0400
++++ nethack-3.4.3-bugfix/src/sounds.c	2013-04-07 13:02:41.000000000 -0400
 @@ -643,6 +643,20 @@
  	case MS_DJINNI:
  	    if (mtmp->mtame) {
@@ -509,8 +900,18 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		    pline_msg = "gurgles.";
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/trap.c nethack-3.4.3-bugfix/src/trap.c
 --- nethack-3.4.3/src/trap.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/trap.c	2013-04-07 13:50:27.870640374 -0400
-@@ -2313,7 +2313,8 @@
++++ nethack-3.4.3-bugfix/src/trap.c	2013-08-03 20:08:23.693245892 -0400
+@@ -915,8 +915,7 @@
+ #endif
+ 		    You("land %s!", predicament);
+ 		}
+-		if (!Passes_walls)
+-		    u.utrap = rn1(6,2);
++		u.utrap = rn1(6,2);
+ 		u.utraptype = TT_PIT;
+ #ifdef STEED
+ 		if (!steedintrap(trap, (struct obj *)0)) {
+@@ -2313,7 +2312,8 @@
  	ELevitation &= ~emask;
  	if(Levitation) return(0); /* maybe another ring/potion/boots */
  	if(u.uswallow) {
@@ -520,7 +921,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		is_animal(u.ustuck->data) ? "swallowed" : "engulfed");
  	    return(1);
  	}
-@@ -2360,9 +2361,10 @@
+@@ -2360,9 +2360,10 @@
  	}
  	if (!trap) {
  	    trap = t_at(u.ux,u.uy);
@@ -534,7 +935,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		You_feel("heavier.");
  	    /* u.uinwater msgs already in spoteffects()/drown() */
  	    else if (!u.uinwater && !no_msg) {
-@@ -2377,10 +2379,11 @@
+@@ -2377,10 +2378,11 @@
  			      "splashed down" : sokoban_trap ? "crashed" :
  			      "hit the ground");
  		    else {
@@ -550,7 +951,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  			    /* Justification elsewhere for Sokoban traps
  			     * is based on air currents. This is
  			     * consistent with that.
-@@ -2678,12 +2681,15 @@
+@@ -2678,12 +2680,15 @@
      return retval;
  }
  
@@ -567,7 +968,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  
  	/* Scrolls, spellbooks, potions, weapons and
  	   pieces of armor may get affected by the water */
-@@ -2724,6 +2730,7 @@
+@@ -2724,6 +2729,7 @@
  				/* damage player/monster? */
  				pline("A potion explodes!");
  				delobj(obj);
@@ -575,7 +976,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  				continue;
  			} else if (obj->odiluted) {
  				obj->otyp = POT_WATER;
-@@ -2740,7 +2747,9 @@
+@@ -2740,7 +2746,9 @@
  			   (uarmc->cursed && !rn2(3)))
  				obj->oeroded++;
  		}
@@ -585,9 +986,42 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  }
  
  /*
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/uhitm.c nethack-3.4.3-bugfix/src/uhitm.c
+--- nethack-3.4.3/src/uhitm.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/uhitm.c	2013-08-03 21:43:16.757425483 -0400
+@@ -1754,6 +1754,15 @@
+ 	    for (otmp = mdef->minvent; otmp; otmp = otmp->nobj)
+ 		(void) snuff_lit(otmp);
+ 
++	    /* KMH, conduct */
++	    if (mattk->adtyp == AD_DGST) {
++		u.uconduct.food++;
++		if (!vegan(mdef->data))
++		     u.uconduct.unvegan++;
++		if (!vegetarian(mdef->data))
++		     violated_vegetarian();
++	    }
++
+ 	    if(!touch_petrifies(mdef->data) || Stone_resistance) {
+ #ifdef LINT	/* static char msgbuf[BUFSZ]; */
+ 		char msgbuf[BUFSZ];
+@@ -1780,13 +1789,6 @@
+ 			    break;
+ 			}
+ 
+-			/* KMH, conduct */
+-			u.uconduct.food++;
+-			if (!vegan(mdef->data))
+-			     u.uconduct.unvegan++;
+-			if (!vegetarian(mdef->data))
+-			     violated_vegetarian();
+-
+ 			/* Use up amulet of life saving */
+ 			if (!!(otmp = mlifesaver(mdef))) m_useup(mdef, otmp);
+ 
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/weapon.c nethack-3.4.3-bugfix/src/weapon.c
 --- nethack-3.4.3/src/weapon.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/weapon.c	2013-04-07 14:37:15.038265390 -0400
++++ nethack-3.4.3-bugfix/src/weapon.c	2013-04-07 14:37:15.000000000 -0400
 @@ -1248,6 +1248,8 @@
  
  	/* Set skill for all weapons in inventory to be basic */
@@ -599,7 +1033,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		P_SKILL(skill) = P_BASIC;
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/worm.c nethack-3.4.3-bugfix/src/worm.c
 --- nethack-3.4.3/src/worm.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/worm.c	2013-03-31 21:35:39.988686294 -0400
++++ nethack-3.4.3-bugfix/src/worm.c	2013-03-31 21:35:39.000000000 -0400
 @@ -303,6 +303,23 @@
  	    (void) mattacku(worm);
  }
@@ -649,7 +1083,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
      /* Devalue the monster level of both halves of the worm. */
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/zap.c nethack-3.4.3-bugfix/src/zap.c
 --- nethack-3.4.3/src/zap.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/zap.c	2013-03-31 21:51:15.952582853 -0400
++++ nethack-3.4.3-bugfix/src/zap.c	2013-03-31 21:51:15.000000000 -0400
 @@ -2467,7 +2467,7 @@
  	    } else if (u.dz) {
  		disclose = zap_updown(obj);
@@ -687,9 +1121,10 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		bhitpos.x -= ddx;
  		bhitpos.y -= ddy;
  		break;
+Binary files nethack-3.4.3/.swp and nethack-3.4.3-bugfix/.swp differ
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/sys/winnt/nhraykey.c nethack-3.4.3-bugfix/sys/winnt/nhraykey.c
 --- nethack-3.4.3/sys/winnt/nhraykey.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/sys/winnt/nhraykey.c	2013-03-31 22:47:56.570542233 -0400
++++ nethack-3.4.3-bugfix/sys/winnt/nhraykey.c	2013-03-31 22:47:56.000000000 -0400
 @@ -538,17 +538,23 @@
  			shiftstate = ir->Event.KeyEvent.dwControlKeyState;
  			vk = ir->Event.KeyEvent.wVirtualKeyCode;
@@ -725,7 +1160,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		else if ((ir->EventType == MOUSE_EVENT &&
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/sys/winnt/nttty.c nethack-3.4.3-bugfix/sys/winnt/nttty.c
 --- nethack-3.4.3/sys/winnt/nttty.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/sys/winnt/nttty.c	2013-03-31 22:47:56.574542153 -0400
++++ nethack-3.4.3-bugfix/sys/winnt/nttty.c	2013-03-31 22:47:56.000000000 -0400
 @@ -30,6 +30,7 @@
   * CreateFile
   * GetConsoleScreenBufferInfo
