@@ -91,6 +91,11 @@ List of bugs fixed in this repository:
              Author:  Bulwersator
              Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/a6d7e394d2f5a624205fd082545650915f2e3ad9
 
+* C343-52:	 Worn or wielded objects destroyed by dipping into lit potions of
+             oil are not handled properly; this can result in odd game behavior.
+             Author:  Patric Mueller
+             Source:  http://sourceforge.net/p/unnethack/code/1422/
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
