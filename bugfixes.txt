@@ -100,9 +100,14 @@ List of bugs fixed in this repository:
              Author:  SGrunt (via Bulwersator)
              Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/5e60f1e82d9a26f7c899a01584c6304fcd41ad09
 
-* C343-58 	 #conduct command description grammar is poor
+* C343-58:	 #conduct command description grammar is poor
              Author:  SGrunt (via Bulwersator)
              Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/2c09c93ade52da17a16fd0cd1304952ceb0f3387
+
+* C343-77:   Some messages referring to monsters that look like horses refer
+             to claws.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/0333ed27591ecbb57f90e7adc6ae8aecfdbaf7a5
 
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
