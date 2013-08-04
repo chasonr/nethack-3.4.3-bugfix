@@ -136,6 +136,11 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/fbf885966b11084817ad2ca2003db3bd5e28d079
 
+* C343-345:  Attempting to remove cursed lenses gives a message with poor
+             grammar.
+             Author:  SGrunt (via Bulwersator)
+             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/aba5543d03c5c0d914c51705d3166e8d5a687660
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
