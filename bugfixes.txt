@@ -132,6 +132,10 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/dca24d18e51eea2ca7b71dca2564b266cc73d27d
 
+* C343-343:  Helm of Opposite alignment gives incorrect piety level.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/fbf885966b11084817ad2ca2003db3bd5e28d079
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
