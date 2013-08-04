@@ -150,6 +150,10 @@ List of bugs fixed in this repository:
              Author:  Bulwersator
              Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/2304213f3e68baa89a539984cde950ded066ddd0
 
+* C343-409:  Unlocking a mimic pretending to be a door is not handled properly.
+             Author:  SGrunt
+             Source:  https://github.com/sgrunt/GruntHack/commit/18465ffea7214bff81ec5b5687222b63cdd7460b
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.
