@@ -86,6 +86,11 @@ List of bugs fixed in this repository:
              Author:  Bulwersator
              Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/f58badbede0dc6ebcf2a0f4218bfdb0f8423acaa
 
+* C343-24:   Documented default for option "null" is "off"; default is actually
+             "on".
+             Author:  Bulwersator
+             Source:  https://github.com/Bulwersator/UnNetHackPlus/commit/a6d7e394d2f5a624205fd082545650915f2e3ad9
+
 * SC343-11:  It's possible to easily find the identity of a high priest on the
              Astral plane.
 * SC343-12:  Hero using telepathy can abuse Call on the Astral Plane.

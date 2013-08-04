@@ -2584,7 +2584,7 @@
             setting this with the `O' command.
 
           null
-            Send padding nulls to the terminal (default off).
+            Send padding nulls to the terminal (default on).
 
           number_pad
             Use the number keys to move instead of [yuhjklbn] (default 0 or
