@@ -437,7 +437,7 @@ char ch;
 			   it's broken */
 			if (is_nt) {
 				WCHAR wch[2];
-				MultiByteToWideChar(CP_OEMCP, 0,
+				MultiByteToWideChar(CP_OEMCP, MB_USEGLYPHCHARS,
 						&ch, 1, wch, 2);
 				WriteConsoleOutputCharacterW(hConOut,wch,1,
 								cursor,&ccount);
@@ -493,7 +493,7 @@ int in_ch;
 	/* Avoid WriteConsoleOutputCharacterA in NT -- it's broken */
 	if (is_nt) {
 		WCHAR wch[2];
-		MultiByteToWideChar(CP_OEMCP, 0,
+		MultiByteToWideChar(CP_OEMCP, MB_USEGLYPHCHARS,
 				&ch, 1, wch, 2);
 		WriteConsoleOutputCharacterW(hConOut,wch,1,
 						cursor,&ccount);
