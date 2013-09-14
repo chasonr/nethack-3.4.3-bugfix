@@ -1196,7 +1196,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +			   it's broken */
 +			if (is_nt) {
 +				WCHAR wch[2];
-+				MultiByteToWideChar(CP_OEMCP, 0,
++				MultiByteToWideChar(CP_OEMCP, MB_USEGLYPHCHARS,
 +						&ch, 1, wch, 2);
 +				WriteConsoleOutputCharacterW(hConOut,wch,1,
 +								cursor,&ccount);
@@ -1215,7 +1215,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +	/* Avoid WriteConsoleOutputCharacterA in NT -- it's broken */
 +	if (is_nt) {
 +		WCHAR wch[2];
-+		MultiByteToWideChar(CP_OEMCP, 0,
++		MultiByteToWideChar(CP_OEMCP, MB_USEGLYPHCHARS,
 +				&ch, 1, wch, 2);
 +		WriteConsoleOutputCharacterW(hConOut,wch,1,
 +						cursor,&ccount);
