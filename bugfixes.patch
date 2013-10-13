@@ -598,7 +598,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  				return 1;
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/do_wear.c nethack-3.4.3-bugfix/src/do_wear.c
 --- nethack-3.4.3/src/do_wear.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/src/do_wear.c	2013-08-03 22:03:00.905462838 -0400
++++ nethack-3.4.3-bugfix/src/do_wear.c	2013-10-12 23:17:21.954252676 -0400
 @@ -317,6 +317,7 @@
  		if (u.ualign.type == A_NEUTRAL)
  		    u.ualign.type = rn2(2) ? A_CHAOTIC : A_LAWFUL;
@@ -620,7 +620,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	if((otmp == uwep) ? welded(otmp) : (int)otmp->cursed) {
  		You("can't.  %s cursed.",
 -			(is_boots(otmp) || is_gloves(otmp) || otmp->quan > 1L)
-+			(is_boots(otmp) || is_gloves(otmp) otmp->otyp == LENSES || otmp->quan > 1L)
++			(is_boots(otmp) || is_gloves(otmp) || otmp->otyp == LENSES || otmp->quan > 1L)
  			? "They are" : "It is");
  		otmp->bknown = TRUE;
  		return(1);
@@ -1121,7 +1121,6 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		bhitpos.x -= ddx;
  		bhitpos.y -= ddy;
  		break;
-Binary files nethack-3.4.3/.swp and nethack-3.4.3-bugfix/.swp differ
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/sys/winnt/nhraykey.c nethack-3.4.3-bugfix/sys/winnt/nhraykey.c
 --- nethack-3.4.3/sys/winnt/nhraykey.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/sys/winnt/nhraykey.c	2013-03-31 22:47:56.000000000 -0400
@@ -1160,7 +1159,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  		else if ((ir->EventType == MOUSE_EVENT &&
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/sys/winnt/nttty.c nethack-3.4.3-bugfix/sys/winnt/nttty.c
 --- nethack-3.4.3/sys/winnt/nttty.c	2003-12-07 18:39:13.000000000 -0500
-+++ nethack-3.4.3-bugfix/sys/winnt/nttty.c	2013-03-31 22:47:56.000000000 -0400
++++ nethack-3.4.3-bugfix/sys/winnt/nttty.c	2013-09-13 23:41:43.233439889 -0400
 @@ -30,6 +30,7 @@
   * CreateFile
   * GetConsoleScreenBufferInfo
