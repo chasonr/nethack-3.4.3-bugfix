@@ -124,6 +124,11 @@ List of bugs fixed in this repository:
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/a65cf627f512c63fbae610e2f94806c86b0fe118
 
+* C343-172:  Crash could occur when monster uses potion or food to cure stoning
+             or confusion.
+             Author:  Ray Chason
+             Source:  https://github.com/chasonr/nethack-3.4.3-bugfix/commit/7da438e44d491aa6098ce75df65650521f166028
+
 * C343-243:  Hero can throw without hands.
              Author:  SGrunt
              Source:  https://github.com/sgrunt/GruntHack/commit/b6416957f7e6dd468d9491be8f7ca3814b1a5622
