@@ -177,6 +177,9 @@ Bugs not mentioned on the DevTeam's website
 *            Color of mithril objects is wrong 
              Author: Bulwersator
              Source: https://github.com/Bulwersator/UnNetHackPlus/commit/67c167367b8b118c9bc9b7f4e19bdd41bbc3b308
+*            Amnesia should forget more than one spell
+             Author: Ray Chason
+             Source: https://github.com/chasonr/nethack-3.4.3-bugfix/commit/5ddb88e650e6ce0cc3107a9f08711f6334604ab7
 
 Rejected patches:
 

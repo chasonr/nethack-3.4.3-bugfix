@@ -1,7 +1,7 @@
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/bugfixes.txt nethack-3.4.3-bugfix/bugfixes.txt
 --- nethack-3.4.3/bugfixes.txt	1969-12-31 19:00:00.000000000 -0500
-+++ nethack-3.4.3-bugfix/bugfixes.txt	2013-08-03 22:19:37.445494274 -0400
-@@ -0,0 +1,182 @@
++++ nethack-3.4.3-bugfix/bugfixes.txt	2014-11-09 17:39:36.277533970 -0500
+@@ -0,0 +1,190 @@
 +List of bugs fixed in this repository:
 +
 +* C343-248:  You can't put candles in a candelabrum while underwater.
@@ -128,6 +128,11 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +             Author:  SGrunt
 +             Source:  https://github.com/sgrunt/GruntHack/commit/a65cf627f512c63fbae610e2f94806c86b0fe118
 +
++* C343-172:  Crash could occur when monster uses potion or food to cure stoning
++             or confusion.
++             Author:  Ray Chason
++             Source:  https://github.com/chasonr/nethack-3.4.3-bugfix/commit/7da438e44d491aa6098ce75df65650521f166028
++
 +* C343-243:  Hero can throw without hands.
 +             Author:  SGrunt
 +             Source:  https://github.com/sgrunt/GruntHack/commit/b6416957f7e6dd468d9491be8f7ca3814b1a5622
@@ -176,6 +181,9 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
 +*            Color of mithril objects is wrong 
 +             Author: Bulwersator
 +             Source: https://github.com/Bulwersator/UnNetHackPlus/commit/67c167367b8b118c9bc9b7f4e19bdd41bbc3b308
++*            Amnesia should forget more than one spell
++             Author: Ray Chason
++             Source: https://github.com/chasonr/nethack-3.4.3-bugfix/commit/5ddb88e650e6ce0cc3107a9f08711f6334604ab7
 +
 +Rejected patches:
 +
@@ -297,7 +305,7 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  #define HI_LEATHER	CLR_BROWN
  #define HI_CLOTH	CLR_BROWN
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/include/extern.h nethack-3.4.3-bugfix/include/extern.h
---- nethack-3.4.3/include/extern.h	2012-01-19 19:21:43.000000000 -0500
+--- nethack-3.4.3/include/extern.h	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/include/extern.h	2013-03-31 22:13:58.000000000 -0400
 @@ -1576,6 +1576,7 @@
  E const char *FDECL(a_gname_at, (XCHAR_P x,XCHAR_P y));
@@ -488,32 +496,6 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  							TRUE},
  	{"force", "force a lock", doforce, FALSE},
  	{"invoke", "invoke an object's powers", doinvoke, TRUE},
-diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/dbridge.c nethack-3.4.3-bugfix/src/dbridge.c
---- nethack-3.4.3/src/dbridge.c	2013-11-07 05:14:37.410281145 -0500
-+++ nethack-3.4.3-bugfix/src/dbridge.c	2003-12-07 18:39:13.000000000 -0500
-@@ -929,8 +929,8 @@
- 				      E_phrase(etmp1, "die"));
- #endif
- 			}
--			killer_format = NO_KILLER_PREFIX;
--			killer = "crushed by a collapsing drawbridge";
-+			killer_format = KILLED_BY_AN;
-+			killer = "collapsing drawbridge";
- 			e_died(etmp1, e_inview? 3 : 2, CRUSHING); /*no corpse*/
- 			if(lev1->typ == MOAT) do_entity(etmp1);
- 		}
-diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/detect.c nethack-3.4.3-bugfix/src/detect.c
---- nethack-3.4.3/src/detect.c	2013-11-07 05:17:13.370286065 -0500
-+++ nethack-3.4.3-bugfix/src/detect.c	2003-12-07 18:39:13.000000000 -0500
-@@ -820,7 +820,7 @@
- 	case 5 : pline("%s!", Tobjnam(obj, "explode"));
- 	    useup(obj);
- 	    obj = 0;	/* it's gone */
--	    losehp(rnd(30), "killed by an exploding crystal ball", NO_KILLER_PREFIX);
-+	    losehp(rnd(30), "exploding crystal ball", KILLED_BY_AN);
- 	    break;
- 	}
- 	if (obj) consume_obj_charge(obj, TRUE);
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/dig.c nethack-3.4.3-bugfix/src/dig.c
 --- nethack-3.4.3/src/dig.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/dig.c	2013-08-03 20:05:53.661241159 -0400
@@ -965,6 +947,18 @@ diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*
  	    } else if (mtmp->mpeaceful) {
  		if (ptr == &mons[PM_WATER_DEMON])
  		    pline_msg = "gurgles.";
+diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/spell.c nethack-3.4.3-bugfix/src/spell.c
+--- nethack-3.4.3/src/spell.c	2003-12-07 18:39:13.000000000 -0500
++++ nethack-3.4.3-bugfix/src/spell.c	2014-11-09 17:10:49.601479501 -0500
+@@ -1010,7 +1010,7 @@
+ 	for (n = 0; n < MAXSPELL && spellid(n) != NO_SPELL; n++)
+ 		continue;
+ 	if (n) {
+-		nzap = rnd(n) + confused ? 1 : 0;
++		nzap = rnd(n) + (confused ? 1 : 0);
+ 		if (nzap > n) nzap = n;
+ 		for (i = n - nzap; i < n; i++) {
+ 		    spellid(i) = NO_SPELL;
 diff -U 3 -Nr '--exclude=.*.sw[a-z]' '--exclude=bugfixes.patch' '--exclude=.git*' nethack-3.4.3/src/trap.c nethack-3.4.3-bugfix/src/trap.c
 --- nethack-3.4.3/src/trap.c	2003-12-07 18:39:13.000000000 -0500
 +++ nethack-3.4.3-bugfix/src/trap.c	2013-08-03 20:08:23.693245892 -0400
